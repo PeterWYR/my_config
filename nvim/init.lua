@@ -7,14 +7,14 @@
 ========         .----------------------.   | === |          ========
 ========         |.-""""""""""""""""""-.|   |-----|          ========
 ========         ||                    ||   | === |          ========
-========         ||   KICKSTART.NVIM   ||   |-----|          ========
+========         ||      MYNEOVIM      ||   |-----|          ========
 ========         ||                    ||   | === |          ========
 ========         ||                    ||   |-----|          ========
 ========         ||:Tutor              ||   |:::::|          ========
 ========         |'-..................-'|   |____o|          ========
 ========         `"")----------------(""`   ___________      ========
-========        /::::::::::|  |::::::::::\  \ no mouse \     ========
-========       /:::========|  |==hjkl==:::\  \ required \    ========
+========        /::::::::::|  |::::i:::::\  \ no mouse \     ========
+========       /:::========|  |===jkl=::::\  \ required \    ========
 ========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
 ========                                                     ========
 =====================================================================
@@ -359,6 +359,69 @@ require('lazy').setup({
           },
         },
       }
+    end,
+  },
+
+  -- =============================================================================
+  --  DASHBOARD: Alpha-nvim
+  -- =============================================================================
+  {
+    'goolord/alpha-nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      local alpha = require 'alpha'
+      local dashboard = require 'alpha.themes.dashboard'
+
+      -- 1. The Header: A Cool ASCII Art Logo
+      dashboard.section.header.val = {
+        [[                                                                     ]],
+        [[       ████ ██████           █████      ██                     ]],
+        [[      ███████████             █████                             ]],
+        [[      █████████ ███████████████████ ███   ███████████   ]],
+        [[     █████████  ███    █████████████ █████ ██████████████   ]],
+        [[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
+        [[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
+        [[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
+        [[                                                                       ]],
+        [[                                                                       ]],
+        [[                                                                       ]],
+      }
+
+      -- 2. The Buttons: Quick Links
+      -- NOTE: You can press the key in the 'shortcut' to trigger it immediately
+      dashboard.section.buttons.val = {
+        dashboard.button('e', '  New File', ':ene <BAR> startinsert <CR>'),
+        dashboard.button('f', '  Find File', ':Telescope find_files<CR>'),
+        dashboard.button('r', '  Recent', ':Telescope oldfiles<CR>'),
+        dashboard.button('g', '  Live Grep', ':Telescope live_grep<CR>'),
+        dashboard.button('c', '  Config', ':e $MYVIMRC <CR>'),
+        dashboard.button('q', '  Quit', ':qa<CR>'),
+      }
+
+      -- 3. The Footer: Startup Stats (The "Flex" Part)
+      -- This function calculates how many plugins are loaded and startup time
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'LazyVimStarted',
+        callback = function()
+          local stats = require('lazy').stats()
+          local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+          dashboard.section.footer.val = '⚡ Neovim loaded ' .. stats.loaded .. '/' .. stats.count .. ' plugins in ' .. ms .. 'ms'
+          pcall(vim.cmd.AlphaRedraw)
+        end,
+      })
+
+      -- 4. Styling: Apply Dracula colors to the dashboard
+      -- Making the header purple/cyan to match the theme
+      vim.api.nvim_set_hl(0, 'AlphaHeader', { fg = '#bd93f9', bold = true }) -- Dracula Purple
+      vim.api.nvim_set_hl(0, 'AlphaButtons', { fg = '#f8f8f2' }) -- Dracula Foreground
+      vim.api.nvim_set_hl(0, 'AlphaShortcut', { fg = '#ff79c6', italic = true }) -- Dracula Pink
+      vim.api.nvim_set_hl(0, 'AlphaFooter', { fg = '#6272a4', italic = true }) -- Dracula Comment
+
+      dashboard.section.header.opts.hl = 'AlphaHeader'
+      dashboard.section.buttons.opts.hl = 'AlphaButtons'
+      dashboard.section.footer.opts.hl = 'AlphaFooter'
+
+      alpha.setup(dashboard.config)
     end,
   },
 
