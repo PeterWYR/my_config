@@ -66,10 +66,12 @@ conda() {
 
 
 # pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
+# 智能判断：只有当 pyenv 存在时才初始化
+if command -v pyenv 1>/dev/null 2>&1; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
 
 # Added by Antigravity
 export PATH="/Users/wangyiran/.antigravity/antigravity/bin:$PATH"
