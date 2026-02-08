@@ -159,6 +159,12 @@ vim.o.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 10
 
+-- Tabs/spaces
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+vim.o.expandtab = true
+
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
@@ -233,6 +239,86 @@ vim.diagnostic.config {
   -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
   jump = { float = true },
 }
+
+-- Run current file in a floating terminal
+local function open_floating_term(cmd, opts)
+  opts = opts or {}
+  local buf = vim.api.nvim_create_buf(false, true)
+  local width = math.floor(vim.o.columns * 0.8)
+  local height = math.floor(vim.o.lines * 0.8)
+  local row = math.floor((vim.o.lines - height) / 2 - 1)
+  local col = math.floor((vim.o.columns - width) / 2)
+
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = width,
+    height = height,
+    row = row,
+    col = col,
+    style = 'minimal',
+    border = 'rounded',
+  })
+
+  vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = buf })
+  vim.api.nvim_set_option_value('filetype', 'terminal', { buf = buf })
+  vim.keymap.set('n', 'q', '<cmd>close<CR>', { buffer = buf, silent = true })
+  vim.fn.termopen(cmd, { cwd = opts.cwd })
+  vim.cmd.startinsert()
+  return win
+end
+
+local function run_current_file()
+  local file = vim.api.nvim_buf_get_name(0)
+  if file == '' then
+    vim.notify('No file to run', vim.log.levels.WARN)
+    return
+  end
+
+  if vim.bo.modified then vim.cmd.write() end
+
+  local ft = vim.bo.filetype
+  local cwd = vim.fn.fnamemodify(file, ':p:h')
+  local basename = vim.fn.fnamemodify(file, ':t:r')
+  local cache_dir = vim.fn.stdpath('cache') .. '/nvim_run'
+  vim.fn.mkdir(cache_dir, 'p')
+
+  local cmd
+  local opts = { cwd = cwd }
+
+  if ft == 'python' then
+    cmd = { 'python3', file }
+  elseif ft == 'javascript' then
+    cmd = { 'node', file }
+  elseif ft == 'go' then
+    cmd = { 'go', 'run', file }
+  elseif ft == 'rust' then
+    local cargo = vim.fs.find('Cargo.toml', { path = cwd, upward = true })[1]
+    if cargo then
+      opts.cwd = vim.fs.dirname(cargo)
+      cmd = { 'cargo', 'run' }
+    else
+      local out = cache_dir .. '/' .. basename
+      cmd = 'rustc ' .. vim.fn.shellescape(file) .. ' -o ' .. vim.fn.shellescape(out) .. ' && ' .. vim.fn.shellescape(out)
+    end
+  elseif ft == 'c' then
+    local out = cache_dir .. '/' .. basename
+    cmd = 'cc ' .. vim.fn.shellescape(file) .. ' -o ' .. vim.fn.shellescape(out) .. ' && ' .. vim.fn.shellescape(out)
+  elseif ft == 'cpp' then
+    local out = cache_dir .. '/' .. basename
+    cmd = 'c++ ' .. vim.fn.shellescape(file) .. ' -o ' .. vim.fn.shellescape(out) .. ' && ' .. vim.fn.shellescape(out)
+  elseif ft == 'java' then
+    local out = cache_dir .. '/java'
+    vim.fn.mkdir(out, 'p')
+    cmd = 'javac -d ' .. vim.fn.shellescape(out) .. ' ' .. vim.fn.shellescape(file) .. ' && java -cp ' .. vim.fn.shellescape(out) .. ' ' .. basename
+  else
+    vim.notify('Unsupported filetype: ' .. ft, vim.log.levels.WARN)
+    return
+  end
+
+  open_floating_term(cmd, opts)
+end
+
+map('n', '<C-r>', run_current_file, { desc = 'Run current file (float)' })
 
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -760,16 +846,17 @@ require('lazy').setup({
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --  See `:help lsp-config` for information about keys and how to configure
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
-        --
+        clangd = {},
+        gopls = {},
+        pyright = {},
+        rust_analyzer = {},
+        jdtls = {},
+
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        ts_ls = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -779,12 +866,17 @@ require('lazy').setup({
       --    :Mason
       --
       -- You can press `g?` for help in this menu.
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        'lua-language-server', -- Lua Language server
-        'stylua', -- Used to format Lua code
-        -- iYou can add other tools here that you want Mason to install
-      })
+      local ensure_installed = {
+        'lua-language-server',
+        'stylua',
+        'clangd',
+        'gopls',
+        'pyright',
+        'rust-analyzer',
+        'jdtls',
+        'typescript-language-server',
+        -- You can add other tools here that you want Mason to install
+      }
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -830,6 +922,12 @@ require('lazy').setup({
     keys = {
       {
         '<leader>f',
+        function() require('conform').format { async = true, lsp_format = 'fallback' } end,
+        mode = '',
+        desc = '[F]ormat buffer',
+      },
+      {
+        '<leader>fm',
         function() require('conform').format { async = true, lsp_format = 'fallback' } end,
         mode = '',
         desc = '[F]ormat buffer',
@@ -917,7 +1015,7 @@ require('lazy').setup({
         -- <c-k>: Toggle signature help
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
-        preset = 'default',
+        preset = 'super-tab',
 
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -998,7 +1096,25 @@ require('lazy').setup({
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     config = function()
-      local filetypes = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      local filetypes = {
+        'bash',
+        'c',
+        'cpp',
+        'diff',
+        'go',
+        'html',
+        'java',
+        'javascript',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'python',
+        'query',
+        'rust',
+        'vim',
+        'vimdoc',
+      }
       require('nvim-treesitter').install(filetypes)
       vim.api.nvim_create_autocmd('FileType', {
         pattern = filetypes,
@@ -1019,7 +1135,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
