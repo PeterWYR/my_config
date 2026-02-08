@@ -48,7 +48,8 @@ alias t='tmux'
 alias f='fastfetch'
 alias y='yazi'
 alias c='clear'
-alias e='exit'
+alias e='emacs'
+alias q='exit'
 
 # Editors
 export EDITOR=nvim
