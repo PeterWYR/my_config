@@ -1,6 +1,16 @@
-# Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# ==========================================
+#              macOS 专属配置
+# ==========================================
+if [[ "$(uname)" == "Darwin" ]]; then
+    # 1. Homebrew 配置 (Linux 会自动跳过这里)
+    if [ -f "/opt/homebrew/bin/brew" ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+        export PATH="/opt/homebrew/bin:$PATH"
+    fi
 
+    # 2. 其他你只想在 Mac 上用的配置也可以放这里
+    # alias ...
+fi
 ZSH_THEME="powerlevel10k/powerlevel10k"
 # P10K instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
