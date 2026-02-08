@@ -52,3 +52,10 @@
 ;; (unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
+
+;; ~/.doom.d/packages.el
+
+;; 禁用 evil-snipe，彻底释放 's' 和 'S' 键
+(package! evil-snipe :disable t)
+(package! evil-numbers :disable t);
+(package! quickrun)

@@ -32,11 +32,10 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;;(setq doom-theme 'doom-one)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -74,3 +73,63 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;; 主题：Dracula
+(setq doom-theme 'doom-dracula)
+
+;; 行号：使用相对行号 (方便配合 10j, 5k 这种操作)
+(setq display-line-numbers-type 'relative)
+
+(setq confirm-kill-emacs nil)
+;; =========================================
+;; 1. 核心移动：IJKL (Peter 的定制方案)
+;; =========================================
+
+;; 基础移动
+(map! :nv "i" #'evil-previous-line   ; 上
+      :nv "k" #'evil-next-line       ; 下
+      :nv "j" #'evil-backward-char   ; 左
+      :nv "l" #'evil-forward-char)   ; 右
+
+;; 极速大跳 (Shift + IJKL)
+(map! :nv "I" (cmd! (evil-previous-line 10))
+      :nv "K" (cmd! (evil-next-line 10))
+      :nv "J" (cmd! (evil-backward-char 7))
+      :nv "L" (cmd! (evil-forward-char 7)))
+
+;; =========================================
+;; 2. 行首行尾 (修改版)
+;; =========================================
+
+;; 行首 (Home) -> 改为 Ctrl+n
+(map! :n "n" #'evil-beginning-of-line)
+
+;; 行尾 (End) -> 保持 m
+(map! :n "m" #'evil-end-of-line)
+
+;; [重要] 恢复 n 的原厂功能 (查找下一个)
+;; 这一步至关重要，它保证了后面的 = 和 - 能正常工作
+(map! :n "=" #'evil-search-next)
+(map! :n "-" #'evil-search-previous)
+(after! evil
+  ;; 让 = / - 复用 / ? 的高亮搜索结果
+  (map! :map (evil-normal-state-map evil-motion-state-map)
+        "=" #'evil-ex-search-next
+        "-" #'evil-ex-search-previous))
+
+;; =========================================
+;; 3. 搜索跳转 (=/-) 与 插入模式 (s)
+;; =========================================
+
+;; s -> 插入模式
+(map! :n "s" #'evil-insert-state)
+
+
+
+;; =========================================
+;; 4. 其他功能 (U 重做, C-r 运行)
+;; =========================================
+(map! :n "U" #'evil-redo)
+(map! :ni "C-r" #'quickrun) ; 记得在 packages.el 里装了 (package! quickrun)
+
