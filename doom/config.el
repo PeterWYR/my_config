@@ -95,18 +95,21 @@
 ;; 极速大跳 (Shift + IJKL)
 (map! :nv "I" (cmd! (evil-previous-line 10))
       :nv "K" (cmd! (evil-next-line 10))
-      :nv "J" (cmd! (evil-backward-char 7))
-      :nv "L" (cmd! (evil-forward-char 7)))
+      :nv "J" (cmd! (evil-backward-char 10))
+      :nv "L" (cmd! (evil-forward-char 10)))
 
 ;; =========================================
 ;; 2. 行首行尾 (修改版)
 ;; =========================================
 
-;; 行首 (Home) -> 改为 Ctrl+n
-(map! :n "n" #'evil-beginning-of-line)
+(after! evil
+  ;; n -> first non-blank char (like Vim ^)
+  (map! :n "n" #'evil-first-non-blank
+        :v "n" #'evil-first-non-blank)
 
-;; 行尾 (End) -> 保持 m
-(map! :n "m" #'evil-end-of-line)
+  ;; m -> end of line (like Vim $)
+  (map! :n "m" #'evil-end-of-line
+        :v "m" #'evil-end-of-line))
 
 ;; [重要] 恢复 n 的原厂功能 (查找下一个)
 ;; 这一步至关重要，它保证了后面的 = 和 - 能正常工作
@@ -124,6 +127,9 @@
 
 ;; s -> 插入模式
 (map! :n "s" #'evil-insert-state)
+(map! :leader
+      :desc "清除搜索高亮"
+      "RET" #'evil-ex-nohighlight)
 
 
 
@@ -133,3 +139,61 @@
 (map! :n "U" #'evil-redo)
 (map! :ni "C-r" #'quickrun) ; 记得在 packages.el 里装了 (package! quickrun)
 
+
+;; =========================================
+;; 5. 极速 Escape：jk / kj
+;; =========================================
+;; 设置这两个变量后，在插入模式连按 jk 或 kj 都会瞬间退回到 Normal 模式
+(setq evil-escape-key-sequence "jk")        ; 设定主要序列
+(setq evil-escape-unordered-key-sequence t) ; 开启无序匹配 (让 kj 也生效)
+(setq evil-escape-delay 0.25)               ; 判定时间 0.25秒，如果误触太频繁可调低到 0.15
+;; Default: indent width = 4
+
+
+(setq-default tab-width 4)
+(setq-default standard-indent 4)
+
+;; Use spaces instead of literal TAB characters (recommended)
+(setq-default indent-tabs-mode nil)
+(after! evil
+  (map! :n "S" #'evil-write
+        :n "Q" #'evil-quit))
+
+
+(defun my/duplicate-line-or-region ()
+  "Duplicate current line, or active region if any."
+  (interactive)
+  (let ((orig-point (point)))
+    (if (use-region-p)
+        (let* ((beg (region-beginning))
+               (end (region-end))
+               (text (buffer-substring beg end)))
+          (goto-char end)
+          (insert text)
+          (goto-char (+ orig-point (- end beg))))
+      (let* ((beg (line-beginning-position))
+             (end (line-end-position))
+             (text (buffer-substring beg end))
+             (col (current-column)))
+        (end-of-line)
+        (newline)
+        (insert text)
+        (move-to-column col)))))
+(map! :desc "Duplicate line/region" :nvi "C-c d" #'my/duplicate-line-or-region)
+
+(after! evil
+  (define-key evil-normal-state-map (kbd "C-w") window-prefix-map)
+  (define-key evil-motion-state-map (kbd "C-w") window-prefix-map)
+
+  (define-key window-prefix-map (kbd "i") #'windmove-up)
+  (define-key window-prefix-map (kbd "j") #'windmove-left)
+  (define-key window-prefix-map (kbd "k") #'windmove-down)
+  (define-key window-prefix-map (kbd "l") #'windmove-right)
+
+  (define-key window-prefix-map (kbd "s")
+    (lambda () (interactive) (split-window-below) (windmove-down)))
+  (define-key window-prefix-map (kbd "v")
+    (lambda () (interactive) (split-window-right) (windmove-right)))
+
+  (define-key window-prefix-map (kbd "c") #'delete-window)
+  (define-key window-prefix-map (kbd "o") #'delete-other-windows))

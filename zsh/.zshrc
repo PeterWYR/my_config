@@ -1,6 +1,7 @@
 # ==========================================
 #              macOS 专属配置
 # ==========================================
+stty -ixon
 if [[ "$(uname)" == "Darwin" ]]; then
     # 1. Homebrew 配置 (Linux 会自动跳过这里)
     if [ -f "/opt/homebrew/bin/brew" ]; then
@@ -34,11 +35,19 @@ bindkey -v
 export KEYTIMEOUT=1
 
 # Cursor shape
-function zle-keymap-select {
-  [[ $KEYMAP == vicmd ]] && echo -ne '\e[1 q' || echo -ne '\e[5 q'
+function _cursor_block() {
+  # 2 = steady block
+  print -n -- $'\e[2 q'
 }
+
+function zle-line-init() { _cursor_block }
+zle -N zle-line-init
+
+function zle-keymap-select() { _cursor_block }
 zle -N zle-keymap-select
-precmd() { echo -ne '\e[5 q' }
+
+function precmd() { _cursor_block }
+function preexec() { _cursor_block }
 
 # Aliases
 alias op='opencode'
@@ -82,3 +91,6 @@ export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bott
 export SDKMAN_DIR="/Users/wangyiran/.sdkman"
 [[ -s "/Users/wangyiran/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/wangyiran/.sdkman/bin/sdkman-init.sh"
 export PATH="$HOME/.config/emacs/bin:$PATH"
+
+# To customize prompt, run `p10k configure` or edit ~/my_config/zsh/.p10k.zsh.
+[[ ! -f ~/my_config/zsh/.p10k.zsh ]] || source ~/my_config/zsh/.p10k.zsh

@@ -53,8 +53,8 @@
 window-padding-x = 16
 window-padding-y = 12
 theme = Dracula
-font-family = "JetBrainsMono Nerd Font Mono"
-font-size = 20
+font-family = "Iosevka"
+font-size = 22
 font-thicken = false
 macos-titlebar-style = hidden
 quit-after-last-window-closed = true
@@ -63,18 +63,49 @@ quit-after-last-window-closed = true
 term = "xterm-256color"
 
 # Tmux Config
-keybind = ctrl+h=text:\x13\x08
-keybind = ctrl+;=text:\x13\x3b
-keybind = ctrl+1=text:\x131
-keybind = ctrl+2=text:\x132
-keybind = ctrl+3=text:\x133
-keybind = ctrl+4=text:\x134
-keybind = ctrl+5=text:\x135
-keybind = ctrl+6=text:\x136
-keybind = ctrl+7=text:\x137
-keybind = ctrl+8=text:\x138
-keybind = ctrl+9=text:\x139
+#keybind = ctrl+1=text:\x131
+#keybind = ctrl+2=text:\x132
+#keybind = ctrl+3=text:\x133
+#keybind = ctrl+4=text:\x134
+#keybind = ctrl+5=text:\x135
+#keybind = ctrl+6=text:\x136
+#keybind = ctrl+7=text:\x137
+#keybind = ctrl+8=text:\x138
+#keybind = ctrl+9=text:\x139
+# --- 1. 窗口切换 (Cmd+1~9 -> 映射为 Alt+1~9) ---
+# 先把 Ghostty 自己的 cmd+1..9（切 tab）解绑
+keybind = cmd+digit_1=unbind
+keybind = cmd+digit_2=unbind
+keybind = cmd+digit_3=unbind
+keybind = cmd+digit_4=unbind
+keybind = cmd+digit_5=unbind
+keybind = cmd+digit_6=unbind
+keybind = cmd+digit_7=unbind
+keybind = cmd+digit_8=unbind
+keybind = cmd+digit_9=unbind
+
+# 再让 cmd+1..9 发出「ESC + 数字」（也就是 M-1..9 / Alt-1..9）
+keybind = cmd+digit_1=text:\x1b1
+keybind = cmd+digit_2=text:\x1b2
+keybind = cmd+digit_3=text:\x1b3
+keybind = cmd+digit_4=text:\x1b4
+keybind = cmd+digit_5=text:\x1b5
+keybind = cmd+digit_6=text:\x1b6
+keybind = cmd+digit_7=text:\x1b7
+keybind = cmd+digit_8=text:\x1b8
+keybind = cmd+digit_9=text:\x1b9
+
+# --- 2. 分屏切换 (Cmd+ijkl -> 映射为 Alt+ijkl) ---
+# i=上, j=左, k=下, l=右
+keybind = cmd+i=text:\x1bi
+keybind = cmd+j=text:\x1bj
+keybind = cmd+k=text:\x1bk
+keybind = cmd+l=text:\x1bl
+
+
 
 # Cursor animation
 custom-shader = "~/.config/ghostty/shaders/cursor_smear.glsl"
+cursor-style = block
+cursor-style-blink = false
 

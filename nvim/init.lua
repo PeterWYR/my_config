@@ -186,6 +186,8 @@ map({ 'n', 'v' }, 'i', 'k', { desc = 'Move Up' })
 map({ 'n', 'v' }, 'k', 'j', { desc = 'Move Down' })
 map({ 'n', 'v' }, 'j', 'h', { desc = 'Move Left' })
 map({ 'n', 'v' }, 'l', 'l', { desc = 'Move Right' })
+map('n', '<C-c>d', 'mzYP`z', { desc = 'Duplicate line (keep cursor)' })
+map('n', '<C-c>D', 'mzYp`z', { desc = 'Duplicate line above (keep cursor)' })
 
 -- --- 2. Insert Mode Entry (Since 'i' is now Up) ---
 -- h = Insert (replaces standard 'i')
@@ -193,13 +195,13 @@ map('n', 's', 'i', { desc = 'Enter Insert Mode' })
 
 -- --- 3. "Big Jumps" (Faster Navigation) ---
 -- Shift + I = Move 5 lines Up
-map({ 'n', 'v' }, 'I', '5k', { desc = 'Jump 5 Lines Up' })
+map({ 'n', 'v' }, 'I', '10k', { desc = 'Jump 10 Lines Up' })
 -- Shift + K = Move 5 lines Down
-map({ 'n', 'v' }, 'K', '5j', { desc = 'Jump 5 Lines Down' })
+map({ 'n', 'v' }, 'K', '10j', { desc = 'Jump 10 Lines Down' })
 -- Shift + J = Jump to Start of Line
-map({ 'n', 'v' }, 'J', '7h', { desc = 'Jump 7 before' })
+map({ 'n', 'v' }, 'J', '10h', { desc = 'Jump 10 before' })
 -- Shift + L = Jump to End of Line
-map({ 'n', 'v' }, 'L', '7l', { desc = 'Jump 7 after' })
+map({ 'n', 'v' }, 'L', '10l', { desc = 'Jump 10 after' })
 -- n and m being inline navigate
 map({ 'n', 'v' }, 'n', '^', { desc = 'Jump to End of Line' })
 map({ 'n', 'v' }, 'm', '$', { desc = 'Jump to End of Line' })
@@ -210,11 +212,24 @@ map('i', 'jk', '<Esc>', { desc = 'Exit Insert Mode' })
 map('i', 'kj', '<Esc>', { desc = 'Exit Insert Mode' })
 
 -- --- 5. Window Navigation (Optional but recommended) ---
--- Ctrl + ijkl to move between split windows
-map('n', '<C-i>', '<C-w>k', { desc = 'Window Up' })
-map('n', '<C-k>', '<C-w>j', { desc = 'Window Down' })
-map('n', '<C-j>', '<C-w>h', { desc = 'Window Left' })
-map('n', '<C-l>', '<C-w>l', { desc = 'Window Right' })
+vim.keymap.set('n', '<C-w>i', '<C-w>k')
+vim.keymap.set('n', '<C-w>j', '<C-w>h')
+vim.keymap.set('n', '<C-w>k', '<C-w>j')
+vim.keymap.set('n', '<C-w>l', '<C-w>l')
+-- Window prefix: <leader>w ...
+-- Splits
+map('n', '<leader>ws', '<cmd>split<cr>', opts) -- horizontal split
+map('n', '<leader>wv', '<cmd>vsplit<cr>', opts) -- vertical split
+
+-- Move between windows (Doom-style ijkl)
+map('n', '<leader>wi', '<C-w>k', opts) -- left
+map('n', '<leader>wj', '<C-w>h', opts) -- down
+map('n', '<leader>wk', '<C-w>j', opts) -- up
+map('n', '<leader>wl', '<C-w>l', opts) -- right
+
+-- Close / Only
+map('n', '<leader>wc', '<C-w>c', opts) -- close current window
+map('n', '<leader>wo', '<C-w>o', opts) -- only (close others)
 
 -- --- 6. Search Navigation   ------------
 map('n', '=', 'nzz', { desc = 'Next search result' })
@@ -279,7 +294,7 @@ local function run_current_file()
   local ft = vim.bo.filetype
   local cwd = vim.fn.fnamemodify(file, ':p:h')
   local basename = vim.fn.fnamemodify(file, ':t:r')
-  local cache_dir = vim.fn.stdpath('cache') .. '/nvim_run'
+  local cache_dir = vim.fn.stdpath 'cache' .. '/nvim_run'
   vim.fn.mkdir(cache_dir, 'p')
 
   local cmd
@@ -1052,7 +1067,6 @@ require('lazy').setup({
       signature = { enabled = true },
     },
   },
-
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
