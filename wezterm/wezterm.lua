@@ -47,6 +47,11 @@ table.insert(config.keys, {
 	mods = "CMD",
 	action = act.SendString("\x1bl"),
 })
+table.insert(config.keys, {
+	key = "o",
+	mods = "CMD",
+	action = act.SendString("\x1bo"),
+})
 
 -- ===========================================================
 -- 2. Tmux 窗口切换 (伪装 Cmd+1~9 为 Alt+1~9)
@@ -79,4 +84,10 @@ config.font_size = 22.0
 config.default_cursor_style = "SteadyBlock"
 config.cursor_blink_rate = 500
 config.enable_csi_u_key_encoding = true
+config.window_padding = {
+	left = 16,
+	right = 12,
+	top = 16,
+	bottom = 8,
+}
 return config

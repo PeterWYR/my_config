@@ -222,14 +222,14 @@ map('n', '<leader>ws', '<cmd>split<cr>', opts) -- horizontal split
 map('n', '<leader>wv', '<cmd>vsplit<cr>', opts) -- vertical split
 
 -- Move between windows (Doom-style ijkl)
-map('n', '<leader>wi', '<C-w>k', opts) -- left
-map('n', '<leader>wj', '<C-w>h', opts) -- down
-map('n', '<leader>wk', '<C-w>j', opts) -- up
-map('n', '<leader>wl', '<C-w>l', opts) -- right
+map('n', '<leader>i', '<C-w>k', opts) -- left
+map('n', '<leader>j', '<C-w>h', opts) -- down
+map('n', '<leader>k', '<C-w>j', opts) -- up
+map('n', '<leader>l', '<C-w>l', opts) -- right
 
 -- Close / Only
-map('n', '<leader>wc', '<C-w>c', opts) -- close current window
-map('n', '<leader>wo', '<C-w>o', opts) -- only (close others)
+map('n', '<leader>ww', '<C-w>c', opts) -- close current window
+map('n', '<leader>wa', '<C-w>o', opts) -- only (close others)
 
 -- --- 6. Search Navigation   ------------
 map('n', '=', 'nzz', { desc = 'Next search result' })
@@ -238,6 +238,9 @@ map('n', '-', 'Nzz', { desc = 'Previous search result' })
 --  See `:help hlsearch`
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<leader><Enter>', '<cmd>nohlsearch<CR>')
+
+map('n', 'H', ':w<Enter>', { desc = 'Save' })
+map('n', 'Q', ':q<Enter>', { desc = 'Quit' })
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts

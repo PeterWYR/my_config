@@ -197,3 +197,5 @@
 
   (define-key window-prefix-map (kbd "c") #'delete-window)
   (define-key window-prefix-map (kbd "o") #'delete-other-windows))
+(map! :n "H" #'evil-write
+      :n "Q" #'evil-quit)
