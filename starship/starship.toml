@@ -83,8 +83,7 @@ diverged   = "[⇕⇡${ahead_count}⇣${behind_count}](bold cyan)"
 # ----------------------------------------------------------
 [python]
 symbol = " "
-# show virtualenv name only (clean). Change to include version if you want.
-format = "[$symbol$virtualenv]($style) "
+format = "[$symbol $virtualenv ($version)]($style) "
 style = "bold green"
 # Optional: be stricter about when python module shows up
 # detect_extensions = ["py"]
