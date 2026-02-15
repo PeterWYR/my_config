@@ -91,3 +91,4 @@ export SDKMAN_DIR="/Users/wangyiran/.sdkman"
 [[ -s "/Users/wangyiran/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/wangyiran/.sdkman/bin/sdkman-init.sh"
 
 export PATH="$HOME/.config/emacs/bin:$PATH"
+export PATH="$HOME/fvm/default/bin:$PATH"
