@@ -1,6 +1,6 @@
 --[[
 
-=====================================================================
+====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
 ========                                    .-----.          ========
@@ -188,6 +188,7 @@ map({ 'n', 'v' }, 'j', 'h', { desc = 'Move Left' })
 map({ 'n', 'v' }, 'l', 'l', { desc = 'Move Right' })
 map('n', '<C-c>d', 'mzYP`z', { desc = 'Duplicate line (keep cursor)' })
 map('n', '<C-c>D', 'mzYp`z', { desc = 'Duplicate line above (keep cursor)' })
+map({ 'n', 'v' }, 'hh', 'G', { desc = 'Move to bottom' })
 
 -- --- 2. Insert Mode Entry (Since 'i' is now Up) ---
 -- h = Insert (replaces standard 'i')
