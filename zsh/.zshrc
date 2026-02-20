@@ -63,6 +63,7 @@ alias y='yazi'
 alias c='clear'
 alias e='emacs'
 alias q='exit'
+alias o='orb'
 
 # ---- Editors ----
 export EDITOR=nvim
