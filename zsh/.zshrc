@@ -62,8 +62,8 @@ alias f='fastfetch'
 alias y='yazi'
 alias c='clear'
 alias e='emacs'
-alias q='exit'
 alias o='orb'
+alias cc='claude'
 
 # ---- Editors ----
 export EDITOR=nvim
@@ -93,3 +93,5 @@ export SDKMAN_DIR="/Users/wangyiran/.sdkman"
 
 export PATH="$HOME/.config/emacs/bin:$PATH"
 export PATH="$HOME/fvm/default/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"

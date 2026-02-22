@@ -188,8 +188,7 @@ map({ 'n', 'v' }, 'j', 'h', { desc = 'Move Left' })
 map({ 'n', 'v' }, 'l', 'l', { desc = 'Move Right' })
 map('n', '<C-c>d', 'mzYP`z', { desc = 'Duplicate line (keep cursor)' })
 map('n', '<C-c>D', 'mzYp`z', { desc = 'Duplicate line above (keep cursor)' })
-map({ 'n', 'v' }, 'hh', 'G', { desc = 'Move to bottom' })
-
+map('n', 'D', 'L', { desc = 'Bottom of the screen' })
 -- --- 2. Insert Mode Entry (Since 'i' is now Up) ---
 -- h = Insert (replaces standard 'i')
 map('n', 's', 'i', { desc = 'Enter Insert Mode' })
@@ -204,8 +203,9 @@ map({ 'n', 'v' }, 'J', '10h', { desc = 'Jump 10 before' })
 -- Shift + L = Jump to End of Line
 map({ 'n', 'v' }, 'L', '10l', { desc = 'Jump 10 after' })
 -- n and m being inline navigate
-map({ 'n', 'v' }, 'n', '^', { desc = 'Jump to End of Line' })
-map({ 'n', 'v' }, 'm', '$', { desc = 'Jump to End of Line' })
+map({ 'n', 'v' }, 'n', '^', { desc = 'Jump to the beginning of the Line' })
+map({ 'n', 'v' }, 'm', '$', { desc = 'Jump to the end the of Line' })
+map({ 'n', 'v' }, 'h', '%', { desc = 'Jump to the end the of Line' })
 
 -- --- 4. Quick Escape (The "Pro" Touch) ---
 -- Press jk or kj rapidly to exit Insert Mode
@@ -240,7 +240,7 @@ map('n', '-', 'Nzz', { desc = 'Previous search result' })
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<leader><Enter>', '<cmd>nohlsearch<CR>')
 
-map('n', 'H', ':w<Enter>', { desc = 'Save' })
+map('n', 'S', ':w<Enter>', { desc = 'Save' })
 map('n', 'Q', ':q<Enter>', { desc = 'Quit' })
 
 -- Diagnostic Config & Keymaps

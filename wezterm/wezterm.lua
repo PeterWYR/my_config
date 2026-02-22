@@ -5,7 +5,7 @@ local act = wezterm.action
 -- 1. 基础视觉配置 (主题、字体、窗口)
 -- ==========================================
 config.color_scheme = "Dracula (Official)" -- 使用 Dracula 官方主题
-config.font = wezterm.font("Iosevka") -- 你的字体族
+config.font = wezterm.font("IosevkaTerm Nerd Font") -- 你的字体族
 config.font_size = 22.0
 config.enable_csi_u_key_encoding = true
 
@@ -47,11 +47,6 @@ table.insert(config.keys, {
 	mods = "CMD",
 	action = act.SendString("\x1bl"),
 })
-table.insert(config.keys, {
-	key = "o",
-	mods = "CMD",
-	action = act.SendString("\x1bo"),
-})
 
 -- ===========================================================
 -- 2. Tmux 窗口切换 (伪装 Cmd+1~9 为 Alt+1~9)
@@ -82,6 +77,8 @@ config.hide_tab_bar_if_only_one_tab = true -- 只有一个标签时隐藏标签�
 
 config.font_size = 22.0
 config.default_cursor_style = "SteadyBlock"
+config.max_fps = 120
+config.animation_fps = 60
 config.cursor_blink_rate = 500
 config.enable_csi_u_key_encoding = true
 config.window_padding = {
