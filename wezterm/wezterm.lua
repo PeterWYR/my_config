@@ -28,9 +28,9 @@ end
 -- 对应 Tmux 配置: bind -n M-i select-pane -U
 -- ===========================================================
 table.insert(config.keys, {
-	key = "i",
+	key = "h",
 	mods = "CMD",
-	action = act.SendString("\x1bi"), -- 发送 ESC + i (即 Alt-i)
+	action = act.SendString("\x1bh"), -- 发送 ESC + i (即 Alt-i)
 })
 table.insert(config.keys, {
 	key = "j",
@@ -46,6 +46,11 @@ table.insert(config.keys, {
 	key = "l",
 	mods = "CMD",
 	action = act.SendString("\x1bl"),
+})
+table.insert(config.keys, {
+	key = "o",
+	mods = "CMD",
+	action = act.SendString("\x1bo"),
 })
 
 -- ===========================================================

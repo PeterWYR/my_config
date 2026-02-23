@@ -87,16 +87,16 @@
 ;; =========================================
 
 ;; 基础移动
-(map! :nv "i" #'evil-previous-line   ; 上
-      :nv "k" #'evil-next-line       ; 下
-      :nv "j" #'evil-backward-char   ; 左
-      :nv "l" #'evil-forward-char)   ; 右
+;;(map! :nv "i" #'evil-previous-line   ; 上
+;;      :nv "k" #'evil-next-line       ; 下
+;;      :nv "j" #'evil-backward-char   ; 左
+;;      :nv "l" #'evil-forward-char)   ; 右
 
 ;; 极速大跳 (Shift + IJKL)
-(map! :nv "I" (cmd! (evil-previous-line 10))
-      :nv "K" (cmd! (evil-next-line 10))
-      :nv "J" (cmd! (evil-backward-char 10))
-      :nv "L" (cmd! (evil-forward-char 10)))
+;;(map! :nv "I" (cmd! (evil-previous-line 10))
+;;      :nv "K" (cmd! (evil-next-line 10))
+;;      :nv "J" (cmd! (evil-backward-char 10))
+;;      :nv "L" (cmd! (evil-forward-char 10)))
 
 ;; =========================================
 ;; 2. 行首行尾 (修改版)
@@ -126,7 +126,7 @@
 ;; =========================================
 
 ;; s -> 插入模式
-(map! :n "s" #'evil-insert-state)
+;;(map! :n "s" #'evil-insert-state)
 (map! :leader
       :desc "清除搜索高亮"
       "RET" #'evil-ex-nohighlight)
@@ -185,9 +185,9 @@
   (define-key evil-normal-state-map (kbd "C-w") window-prefix-map)
   (define-key evil-motion-state-map (kbd "C-w") window-prefix-map)
 
-  (define-key window-prefix-map (kbd "i") #'windmove-up)
-  (define-key window-prefix-map (kbd "j") #'windmove-left)
-  (define-key window-prefix-map (kbd "k") #'windmove-down)
+  (define-key window-prefix-map (kbd "k") #'windmove-up)
+  (define-key window-prefix-map (kbd "h") #'windmove-left)
+  (define-key window-prefix-map (kbd "j") #'windmove-down)
   (define-key window-prefix-map (kbd "l") #'windmove-right)
 
   (define-key window-prefix-map (kbd "s")
@@ -197,5 +197,5 @@
 
   (define-key window-prefix-map (kbd "c") #'delete-window)
   (define-key window-prefix-map (kbd "o") #'delete-other-windows))
-(map! :n "H" #'evil-write
+(map! :n "S" #'evil-write
       :n "Q" #'evil-quit)

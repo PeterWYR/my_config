@@ -23,17 +23,6 @@
    {
       "context": "Editor && vim_mode == normal",
       "bindings": {
-         "j": "vim::Left",
-         "i": "vim::Up",
-         "k": "vim::Down",
-         "l": "vim::Right",
-         "shift-j": ["workspace::SendKeystrokes", "5 j"],
-         "shift-i": ["workspace::SendKeystrokes", "5 i"],
-         "shift-k": ["workspace::SendKeystrokes", "5 k"],
-         "shift-l": ["workspace::SendKeystrokes", "5 l"],
-
-         "s": "vim::InsertBefore",
-
          "n": "vim::FirstNonWhitespace",
          "m": "vim::EndOfLine",
 
@@ -44,14 +33,8 @@
    {
       "context": "Editor && vim_mode == visual",
       "bindings": {
-         "j": "vim::Left",
-         "i": "vim::Up",
-         "k": "vim::Down",
-         "l": "vim::Right",
-         "shift-j": ["workspace::SendKeystrokes", "10 j"],
-         "shift-i": ["workspace::SendKeystrokes", "10 i"],
-         "shift-k": ["workspace::SendKeystrokes", "10 k"],
-         "shift-l": ["workspace::SendKeystrokes", "10 l"],
+         "j k": "vim::NormalBefore",
+         "k j": "vim::NormalBefore",
       },
    },
 ]
