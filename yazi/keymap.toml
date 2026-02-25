@@ -26,11 +26,9 @@ keymap = [
 	{ on = "<C-z>", run = "suspend",            desc = "Suspend the process" },
 
 	# Hopping
-	{ on = "k", run = "arrow prev", desc = "Previous file" },
-	{ on = "j", run = "arrow next", desc = "Next file" },
+	{ on = "i", run = "arrow prev", desc = "Previous file" },
+	{ on = "k", run = "arrow next", desc = "Next file" },
 
-	{ on = "K", run = "arrow -5", desc = "Previous 5 file" },
-	{ on = "J", run = "arrow 5", desc = "Next 5 file" },
 
 	{ on = "<Up>",   run = "arrow prev", desc = "Previous file" },
 	{ on = "<Down>", run = "arrow next", desc = "Next file" },
@@ -54,7 +52,6 @@ keymap = [
 	{ on = "<Left>",  run = "leave", desc = "Back to the parent directory" },
 	{ on = "<Right>", run = "enter", desc = "Enter the child directory" },
 
-	{ on = "h", run = "leave",    desc = "Back to parent directory" },
 
 	# Toggle
 	{ on = "<Space>", run = [ "toggle", "arrow 1" ], desc = "Toggle the current selection state" },

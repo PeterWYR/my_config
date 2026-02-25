@@ -87,7 +87,7 @@ keybind = cmd+digit_9=text:\x1b9
 
 # --- 2. 分屏切换 (Cmd+ijkl -> 映射为 Alt+ijkl) ---
 # i=上, j=左, k=下, l=右
-keybind = cmd+h=text:\x1bh
+keybind = cmd+i=text:\x1bi
 keybind = cmd+j=text:\x1bj
 keybind = cmd+k=text:\x1bk
 keybind = cmd+l=text:\x1bl

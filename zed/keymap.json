@@ -23,6 +23,11 @@
    {
       "context": "Editor && vim_mode == normal",
       "bindings": {
+         "j": "vim::Left",
+         "i": "vim::Up",
+         "k": "vim::Down",
+         "l": "vim::Right",
+         "s": "vim::InsertBefore",
          "n": "vim::FirstNonWhitespace",
          "m": "vim::EndOfLine",
 
@@ -33,6 +38,10 @@
    {
       "context": "Editor && vim_mode == visual",
       "bindings": {
+         "j": "vim::Left",
+         "i": "vim::Up",
+         "k": "vim::Down",
+         "l": "vim::Right",
          "j k": "vim::NormalBefore",
          "k j": "vim::NormalBefore",
       },
