@@ -38,6 +38,11 @@ table.insert(config.keys, {
 	action = act.SendString("\x1bj"),
 })
 table.insert(config.keys, {
+	key = "h",
+	mods = "CMD",
+	action = act.SendString("\x1bh"),
+})
+table.insert(config.keys, {
 	key = "k",
 	mods = "CMD",
 	action = act.SendString("\x1bk"), -- 注意：这会覆盖 WezTerm 默认的清屏快捷键
