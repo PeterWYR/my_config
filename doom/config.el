@@ -75,8 +75,8 @@
 ;; they are implemented.
 
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-;; 主题：Dracula
-(setq doom-theme 'doom-dracula)
+;; 主题：Catppuccin
+(setq doom-theme 'doom-catppuccin)
 
 ;; 行号：使用相对行号 (方便配合 10j, 5k 这种操作)
 (setq display-line-numbers-type 'relative)

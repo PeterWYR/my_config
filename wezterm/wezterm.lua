@@ -4,8 +4,9 @@ local act = wezterm.action
 -- ==========================================
 -- 1. 基础视觉配置 (主题、字体、窗口)
 -- ==========================================
-config.color_scheme = "Dracula (Official)" -- 使用 Dracula 官方主题
+config.color_scheme = "Catppuccin Mocha"
 config.font = wezterm.font("IosevkaTerm Nerd Font") -- 你的字体族
+
 config.font_size = 22.0
 config.enable_csi_u_key_encoding = true
 

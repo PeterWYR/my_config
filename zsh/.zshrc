@@ -3,14 +3,33 @@
 #  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 #fi
 
+# ==========================================
+# 1. 环境变量与路径 (必须在 Zim 之前加载，让补全能找到软件)
+# ==========================================
+# Homebrew (macOS / Linux 通用)
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif (( ${+commands[brew]} )); then
+  eval "$(brew shellenv)"
+fi
 
-# ---- Zim init (保留你现在那段 install 添加的即可) ----
+export PATH="$HOME/.config/emacs/bin:$PATH"
+export PATH="$HOME/fvm/default/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+export PATH="/Users/wangyiran/.antigravity/antigravity/bin:$PATH"
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+
+# ==========================================
+# 2. Zim 框架初始化 (负责加载补全核心模块)
+# ==========================================
 setopt HIST_IGNORE_ALL_DUPS
 WORDCHARS=${WORDCHARS//[\/]}
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   if (( ${+commands[curl]} )); then
@@ -21,29 +40,28 @@ if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
         https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
   fi
 fi
-# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+
+# Install missing modules, and update init.zsh
 if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
   source ${ZIM_HOME}/zimfw.zsh init
 fi
-eval "$(starship init zsh)"
-# Initialize modules.
+
+# Initialize modules. (这一步会生成 compdef)
 source ${ZIM_HOME}/init.zsh
 
-# Homebrew (macOS / Linux 通用：只要 brew 在就初始化)
-if (( ${+commands[brew]} )); then
-  eval "$(brew shellenv)"
-fi
-
-
-# ---- Prompt / P10K ----
+# ==========================================
+# 3. 终端 UI (Starship 必须在 Zim 之后！)
+# ==========================================
+eval "$(starship init zsh)"
 #[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 #[[ -f ~/my_config/zsh/.p10k.zsh ]] && source ~/my_config/zsh/.p10k.zsh
 
-# ---- Vi mode ----
+# ==========================================
+# 4. 终端按键绑定与光标设置
+# ==========================================
 bindkey -v
 export KEYTIMEOUT=1
 
-# ---- Cursor block (你的代码保留) ----
 function _cursor_block() { print -n -- $'\e[2 q' }
 function zle-line-init() { _cursor_block }
 zle -N zle-line-init
@@ -52,8 +70,9 @@ zle -N zle-keymap-select
 function precmd() { _cursor_block }
 function preexec() { _cursor_block }
 
-
-# ---- Aliases ----
+# ==========================================
+# 5. 别名与编辑器设置
+# ==========================================
 alias op='opencode'
 alias v='nvim'
 alias lg='lazygit'
@@ -65,10 +84,12 @@ alias e='emacs'
 alias o='orb'
 alias cc='claude'
 
-# ---- Editors ----
 export EDITOR=nvim
 export VISUAL=nvim
 
+# ==========================================
+# 6. 开发环境懒加载与工具箱
+# ==========================================
 # ---- Conda lazy load ----
 conda() {
   unset -f conda
@@ -83,15 +104,9 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
-# ---- Antigravity / mirrors ----
-export PATH="/Users/wangyiran/.antigravity/antigravity/bin:$PATH"
-export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
-
 # ---- SDKMAN ----
 export SDKMAN_DIR="/Users/wangyiran/.sdkman"
 [[ -s "/Users/wangyiran/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/wangyiran/.sdkman/bin/sdkman-init.sh"
 
-export PATH="$HOME/.config/emacs/bin:$PATH"
-export PATH="$HOME/fvm/default/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+# -----NEOVIM------
+export PATH="$HOME/nvim-macos-arm64/bin:$PATH"

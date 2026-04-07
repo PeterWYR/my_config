@@ -59,3 +59,4 @@
 (package! evil-snipe :disable t)
 (package! evil-numbers :disable t);
 (package! quickrun)
+(package! doom-catppuccin)

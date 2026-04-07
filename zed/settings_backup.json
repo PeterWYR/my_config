@@ -1,5 +1,9 @@
 {
-    "theme": "Catppuccin Frappé",
+    "theme": {
+        "mode": "system",
+        "light": "One Light",
+        "dark": "One Dark"
+    },
     "agent": {
         "default_model": {
             "effort": "high",
@@ -52,7 +56,7 @@
     "agent_buffer_font_size": 20,
     "vim_mode": true,
     "tab_size": 4,
-    "auto_indent": "none",
+    "auto_indent": false,
     "close_on_file_delete": true,
     "restore_on_file_reopen": false,
 }
