@@ -7,3 +7,4 @@ vim.keymap.set('n', 'n', '0', { noremap = true, silent = true })
 
 -- m for line end (instead of $)
 vim.keymap.set('n', 'm', '$', { noremap = true, silent = true })
+

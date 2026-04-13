@@ -1,5 +1,9 @@
 {
-    "theme": "Catppuccin Frappé",
+    "theme": {
+        "mode": "dark",
+        "light": "One Light",
+        "dark": "Bearded Theme Classic Anthracite"
+    },
     "agent": {
         "default_model": {
             "effort": "high",
@@ -16,29 +20,11 @@
         ],
         "model_parameters": [],
     },
-    "language_models": {
-        "openai_compatible": {
-            "MiniMax": {
-                "api_url": "https://api.minimax.com/v1",
-                "available_models": [
-                    {
-                        "name": "MiniMax-M2.5",
-                        "max_tokens": 200000,
-                        "max_output_tokens": 32000,
-                        "max_completion_tokens": 200000,
-                        "capabilities": {
-                            "tools": false,
-                            "images": false,
-                            "parallel_tool_calls": false,
-                            "prompt_cache_key": false,
-                            "chat_completions": true,
-                        },
-                    },
-                ],
-            },
-        },
+    "icon_theme": {
+        "mode": "light",
+        "light": "Bearded Icon Theme",
+        "dark": "Bearded Icon Theme"
     },
-    "icon_theme": "Catppuccin Mocha",
     "file_finder": {
         "modal_max_width": "large",
     },

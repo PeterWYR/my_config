@@ -5,7 +5,7 @@ vim.pack.add({
 })
 
 require("catppuccin").setup({
-	flavour = "macchiato",
+	flavour = "mocha",
 })
 vim.cmd("colorscheme catppuccin")
 vim.cmd.hi("statusline guibg=NONE")
