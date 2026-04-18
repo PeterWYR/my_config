@@ -1,3 +1,7 @@
 clash/*.yaml
 clash/*.db
 github-copilot/*
+*.mdb
+*.mdb-lock
+zed/prompts/prompts-library-db.0.mdb/
+zed/conversations/
