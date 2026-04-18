@@ -52,7 +52,7 @@
 # Basic Config
 window-padding-x = 8
 window-padding-y = 8
-theme = catppuccin-mocha.conf
+theme = TokyoNight
 font-family = "IosevkaTerm Nerd Font"
 font-size = 22
 font-thicken = false
