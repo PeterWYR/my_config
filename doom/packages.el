@@ -57,6 +57,5 @@
 
 ;; 禁用 evil-snipe，彻底释放 's' 和 'S' 键
 (package! evil-snipe :disable t)
-(package! evil-numbers :disable t);
+(package! evil-numbers :disable t)
 (package! quickrun)
-(package! doom-catppuccin)

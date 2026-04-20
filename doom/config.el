@@ -75,85 +75,97 @@
 ;; they are implemented.
 
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-;; 主题：Catppuccin
-(setq doom-theme 'doom-catppuccin)
+;; Theme: match Ghostty/tmux Tokyo Night colors.
+(setq doom-theme 'doom-tokyo-night)
 
-;; 行号：使用相对行号 (方便配合 10j, 5k 这种操作)
-(setq display-line-numbers-type 'relative)
+;; Relative numbers match the Neovim setup and make count motions easier.
+(setq display-line-numbers-type 'relative
+      confirm-kill-emacs nil)
 
-(setq confirm-kill-emacs nil)
-;; =========================================
-;; 1. 核心移动：IJKL (Peter 的定制方案)
-;; =========================================
+(setq-default tab-width 4
+              standard-indent 4
+              indent-tabs-mode nil)
 
-;; 基础移动
-;;(map! :nv "i" #'evil-previous-line   ; 上
-;;      :nv "k" #'evil-next-line       ; 下
-;;      :nv "j" #'evil-backward-char   ; 左
-;;      :nv "l" #'evil-forward-char)   ; 右
+;; Fast insert-mode escape, same as Neovim jk/kj.
+(setq evil-escape-key-sequence "jk"
+      evil-escape-unordered-key-sequence t
+      evil-escape-delay 0.25)
 
-;;(map! :i "h" #'ignore)
-;; =========================================
-;; 2. 行首行尾 (修改版)
-;; =========================================
+(defun my/evil-jump-up-7 ()
+  "Move up 7 lines."
+  (interactive)
+  (evil-previous-line 7))
 
-(after! evil
-  ;; n -> first non-blank char (like Vim ^)
-  (map! :n "n" #'evil-first-non-blank
-        :v "n" #'evil-first-non-blank)
+(defun my/evil-jump-left-7 ()
+  "Move left 7 characters."
+  (interactive)
+  (evil-backward-char 7))
 
-  ;; m -> end of line (like Vim $)
-  (map! :n "m" #'evil-end-of-line
-        :v "m" #'evil-end-of-line))
+(defun my/evil-jump-down-7 ()
+  "Move down 7 lines."
+  (interactive)
+  (evil-next-line 7))
 
-;; [重要] 恢复 n 的原厂功能 (查找下一个)
-;; 这一步至关重要，它保证了后面的 = 和 - 能正常工作
-(map! :n "=" #'evil-search-next)
-(map! :n "-" #'evil-search-previous)
-(after! evil
-  ;; 让 = / - 复用 / ? 的高亮搜索结果
-  (map! :map (evil-normal-state-map evil-motion-state-map)
-        "=" #'evil-ex-search-next
-        "-" #'evil-ex-search-previous))
+(defun my/evil-jump-right-7 ()
+  "Move right 7 characters."
+  (interactive)
+  (evil-forward-char 7))
 
-;; =========================================
-;; 3. 搜索跳转 (=/-) 与 插入模式 (s)
-;; =========================================
+(defun my/evil-search-next-centered ()
+  "Jump to the next search result and recenter."
+  (interactive)
+  (evil-ex-search-next)
+  (recenter))
 
-;; s -> 插入模式
-;;(map! :n "s" #'evil-insert-state)
-(map! :leader
-      :desc "清除搜索高亮"
-      "RET" #'evil-ex-nohighlight)
+(defun my/evil-search-previous-centered ()
+  "Jump to the previous search result and recenter."
+  (interactive)
+  (evil-ex-search-previous)
+  (recenter))
 
+(defun my/split-window-above ()
+  "Split the current window above and focus it."
+  (interactive)
+  (split-window (selected-window) nil 'above)
+  (windmove-up))
 
+(defun my/split-window-left ()
+  "Split the current window to the left and focus it."
+  (interactive)
+  (split-window (selected-window) nil 'left)
+  (windmove-left))
 
-;; =========================================
-;; 4. 其他功能 (U 重做, C-r 运行)
-;; =========================================
-(map! :n "U" #'evil-redo)
-(map! :ni "C-r" #'quickrun) ; 记得在 packages.el 里装了 (package! quickrun)
+(defun my/split-window-below ()
+  "Split the current window below and focus it."
+  (interactive)
+  (split-window-below)
+  (windmove-down))
 
+(defun my/split-window-right ()
+  "Split the current window to the right and focus it."
+  (interactive)
+  (split-window-right)
+  (windmove-right))
 
-;; =========================================
-;; 5. 极速 Escape：jk / kj
-;; =========================================
-;; 设置这两个变量后，在插入模式连按 jk 或 kj 都会瞬间退回到 Normal 模式
-(setq evil-escape-key-sequence "jk")        ; 设定主要序列
-(setq evil-escape-unordered-key-sequence t) ; 开启无序匹配 (让 kj 也生效)
-(setq evil-escape-delay 0.25)               ; 判定时间 0.25秒，如果误触太频繁可调低到 0.15
-;; Default: indent width = 4
+(defun my/enlarge-window-5 ()
+  "Increase window height by 5 lines."
+  (interactive)
+  (enlarge-window 5))
 
+(defun my/shrink-window-horizontally-5 ()
+  "Decrease window width by 5 columns."
+  (interactive)
+  (shrink-window-horizontally 5))
 
-(setq-default tab-width 4)
-(setq-default standard-indent 4)
+(defun my/shrink-window-5 ()
+  "Decrease window height by 5 lines."
+  (interactive)
+  (shrink-window 5))
 
-;; Use spaces instead of literal TAB characters (recommended)
-(setq-default indent-tabs-mode nil)
-(after! evil
-  (map! :n "S" #'evil-write
-        :n "Q" #'evil-quit))
-
+(defun my/enlarge-window-horizontally-5 ()
+  "Increase window width by 5 columns."
+  (interactive)
+  (enlarge-window-horizontally 5))
 
 (defun my/duplicate-line-or-region ()
   "Duplicate current line, or active region if any."
@@ -174,23 +186,51 @@
         (newline)
         (insert text)
         (move-to-column col)))))
-(map! :desc "Duplicate line/region" :nvi "C-c d" #'my/duplicate-line-or-region)
 
 (after! evil
   (define-key evil-normal-state-map (kbd "C-w") window-prefix-map)
   (define-key evil-motion-state-map (kbd "C-w") window-prefix-map)
-
-  (define-key window-prefix-map (kbd "k") #'windmove-up)
-  (define-key window-prefix-map (kbd "h") #'windmove-left)
-  (define-key window-prefix-map (kbd "j") #'windmove-down)
+  (define-key window-prefix-map (kbd "i") #'windmove-up)
+  (define-key window-prefix-map (kbd "j") #'windmove-left)
+  (define-key window-prefix-map (kbd "k") #'windmove-down)
   (define-key window-prefix-map (kbd "l") #'windmove-right)
-
-  (define-key window-prefix-map (kbd "s")
-    (lambda () (interactive) (split-window-below) (windmove-down)))
-  (define-key window-prefix-map (kbd "v")
-    (lambda () (interactive) (split-window-right) (windmove-right)))
-
   (define-key window-prefix-map (kbd "c") #'delete-window)
-  (define-key window-prefix-map (kbd "o") #'delete-other-windows))
-(map! :n "S" #'evil-write
-      :n "Q" #'evil-quit)
+  (define-key window-prefix-map (kbd "o") #'delete-other-windows)
+
+  (map! :nv "i" #'evil-previous-line
+        :nv "j" #'evil-backward-char
+        :nv "k" #'evil-next-line
+        :nv "l" #'evil-forward-char
+
+        :nv "I" #'my/evil-jump-up-7
+        :nv "J" #'my/evil-jump-left-7
+        :nv "K" #'my/evil-jump-down-7
+        :nv "L" #'my/evil-jump-right-7
+
+        :n "s" #'evil-insert-state
+        :nv "n" #'evil-beginning-of-line
+        :nv "m" #'evil-end-of-line
+        :nv "t" #'evil-jump-item
+        :n "=" #'my/evil-search-next-centered
+        :n "-" #'my/evil-search-previous-centered
+        :n "U" #'evil-redo
+        :n "S" #'evil-write
+        :n "Q" #'evil-quit
+        :ni "C-r" #'quickrun
+        :nvi "C-c d" #'my/duplicate-line-or-region))
+
+(map! :leader
+      :desc "Clear search highlights"
+      "RET" #'evil-ex-nohighlight
+
+      (:prefix ("w" . "window")
+       :desc "Split window above" "i" #'my/split-window-above
+       :desc "Split window left"  "j" #'my/split-window-left
+       :desc "Split window below" "k" #'my/split-window-below
+       :desc "Split window right" "l" #'my/split-window-right)
+
+      (:prefix ("r" . "resize")
+       :desc "Increase window height" "i" #'my/enlarge-window-5
+       :desc "Decrease window width"  "j" #'my/shrink-window-horizontally-5
+       :desc "Decrease window height" "k" #'my/shrink-window-5
+       :desc "Increase window width"  "l" #'my/enlarge-window-horizontally-5))
