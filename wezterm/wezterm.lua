@@ -25,14 +25,9 @@ local function add(k)
 end
 
 -- ===========================================================
--- 1. Tmux 分屏导航 (伪装 Cmd+ijkl 为 Alt+ijkl)
--- 对应 Tmux 配置: bind -n M-i select-pane -U
+-- 1. Tmux 分屏导航 (伪装 Cmd+hjkl 为 Alt+hjkl)
+-- 对应 Tmux 配置: bind -n M-k select-pane -U
 -- ===========================================================
-table.insert(config.keys, {
-	key = "i",
-	mods = "CMD",
-	action = act.SendString("\x1bi"), -- 发送 ESC + i (即 Alt-i)
-})
 table.insert(config.keys, {
 	key = "j",
 	mods = "CMD",
@@ -76,7 +71,7 @@ end
 -- 3. 确保 Option 键行为正确 (给 Neovim/Emacs 用)
 -- ===========================================================
 -- 让 Option 键发送 Meta 信号，而不是输出特殊字符 (如 ©, ® 等)
--- 这对你的 Ctrl+Option+ijkl 在 Neovim 里生效非常重要
+-- 这对你的 Ctrl+Option+hjkl 在 Neovim 里生效非常重要
 config.send_composed_key_when_left_alt_is_pressed = false
 config.send_composed_key_when_right_alt_is_pressed = false
 

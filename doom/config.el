@@ -91,26 +91,6 @@
       evil-escape-unordered-key-sequence t
       evil-escape-delay 0.25)
 
-(defun my/evil-jump-up-7 ()
-  "Move up 7 lines."
-  (interactive)
-  (evil-previous-line 7))
-
-(defun my/evil-jump-left-7 ()
-  "Move left 7 characters."
-  (interactive)
-  (evil-backward-char 7))
-
-(defun my/evil-jump-down-7 ()
-  "Move down 7 lines."
-  (interactive)
-  (evil-next-line 7))
-
-(defun my/evil-jump-right-7 ()
-  "Move right 7 characters."
-  (interactive)
-  (evil-forward-char 7))
-
 (defun my/evil-search-next-centered ()
   "Jump to the next search result and recenter."
   (interactive)
@@ -190,24 +170,14 @@
 (after! evil
   (define-key evil-normal-state-map (kbd "C-w") window-prefix-map)
   (define-key evil-motion-state-map (kbd "C-w") window-prefix-map)
-  (define-key window-prefix-map (kbd "i") #'windmove-up)
-  (define-key window-prefix-map (kbd "j") #'windmove-left)
-  (define-key window-prefix-map (kbd "k") #'windmove-down)
+  (define-key window-prefix-map (kbd "k") #'windmove-up)
+  (define-key window-prefix-map (kbd "h") #'windmove-left)
+  (define-key window-prefix-map (kbd "j") #'windmove-down)
   (define-key window-prefix-map (kbd "l") #'windmove-right)
   (define-key window-prefix-map (kbd "c") #'delete-window)
   (define-key window-prefix-map (kbd "o") #'delete-other-windows)
 
-  (map! :nv "i" #'evil-previous-line
-        :nv "j" #'evil-backward-char
-        :nv "k" #'evil-next-line
-        :nv "l" #'evil-forward-char
-
-        :nv "I" #'my/evil-jump-up-7
-        :nv "J" #'my/evil-jump-left-7
-        :nv "K" #'my/evil-jump-down-7
-        :nv "L" #'my/evil-jump-right-7
-
-        :n "s" #'evil-insert-state
+  (map! :n "s" #'evil-insert-state
         :nv "n" #'evil-beginning-of-line
         :nv "m" #'evil-end-of-line
         :nv "t" #'evil-jump-item
@@ -224,13 +194,13 @@
       "RET" #'evil-ex-nohighlight
 
       (:prefix ("w" . "window")
-       :desc "Split window above" "i" #'my/split-window-above
-       :desc "Split window left"  "j" #'my/split-window-left
-       :desc "Split window below" "k" #'my/split-window-below
+       :desc "Split window above" "k" #'my/split-window-above
+       :desc "Split window left"  "h" #'my/split-window-left
+       :desc "Split window below" "j" #'my/split-window-below
        :desc "Split window right" "l" #'my/split-window-right)
 
       (:prefix ("r" . "resize")
-       :desc "Increase window height" "i" #'my/enlarge-window-5
-       :desc "Decrease window width"  "j" #'my/shrink-window-horizontally-5
-       :desc "Decrease window height" "k" #'my/shrink-window-5
+       :desc "Increase window height" "k" #'my/enlarge-window-5
+       :desc "Decrease window width"  "h" #'my/shrink-window-horizontally-5
+       :desc "Decrease window height" "j" #'my/shrink-window-5
        :desc "Increase window width"  "l" #'my/enlarge-window-horizontally-5))

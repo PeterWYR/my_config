@@ -85,9 +85,8 @@ keybind = cmd+digit_7=text:\x1b7
 keybind = cmd+digit_8=text:\x1b8
 keybind = cmd+digit_9=text:\x1b9
 
-# --- 2. 分屏切换 (Cmd+ijkl -> 映射为 Alt+ijkl) ---
-# i=上, j=左, k=下, l=右
-keybind = cmd+i=text:\x1bi
+# --- 2. 分屏切换 (Cmd+hjkl -> 映射为 Alt+hjkl) ---
+# h=左, j=下, k=上, l=右
 keybind = cmd+h=text:\x1bh
 keybind = cmd+j=text:\x1bj
 keybind = cmd+k=text:\x1bk
@@ -101,4 +100,3 @@ keybind = cmd+o=text:\x1bo
 custom-shader = "~/.config/ghostty/shaders/cursor_smear.glsl"
 cursor-style = block
 cursor-style-blink = false
-
