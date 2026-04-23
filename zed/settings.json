@@ -2,13 +2,13 @@
     "theme": {
         "mode": "dark",
         "light": "One Light",
-        "dark": "Bearded Theme Classic Anthracite"
+        "dark": "Tokyo Night",
     },
     "agent": {
         "default_model": {
-            "effort": "high",
+            "effort": "medium",
             "provider": "zed.dev",
-            "model": "claude-sonnet-4-6",
+            "model": "gpt-5.4",
             "enable_thinking": true,
         },
         "favorite_models": [
@@ -23,7 +23,7 @@
     "icon_theme": {
         "mode": "light",
         "light": "Bearded Icon Theme",
-        "dark": "Bearded Icon Theme"
+        "dark": "Bearded Icon Theme",
     },
     "file_finder": {
         "modal_max_width": "large",

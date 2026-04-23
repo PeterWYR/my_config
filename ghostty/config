@@ -100,3 +100,9 @@ keybind = cmd+o=text:\x1bo
 custom-shader = "~/.config/ghostty/shaders/cursor_smear.glsl"
 cursor-style = block
 cursor-style-blink = false
+
+# 将 Cmd+D 覆盖为 Tmux 的垂直分屏 (发送 Ctrl+b 然后按 %)
+keybind = cmd+d=text:\x02%
+
+# 将 Cmd+Shift+D 覆盖为 Tmux 的水平分屏 (发送 Ctrl+b 然后按 ")
+keybind = cmd+shift+d=text:\x02"
