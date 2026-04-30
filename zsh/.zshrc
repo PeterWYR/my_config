@@ -85,6 +85,7 @@ alias o='orb'
 alias cc='claude'
 alias co='codex'
 alias ge='gemini'
+alias n='node'
 
 export EDITOR=nvim
 export VISUAL=nvim
@@ -113,8 +114,9 @@ export SDKMAN_DIR="/Users/wangyiran/.sdkman"
 # -----NEOVIM------
 export PATH="$HOME/nvim-macos-arm64/bin:$PATH"
 export ENABLE_TOOL_SEARCH=false
+
 export ANTHROPIC_BASE_URL=https://api.kimi.com/coding/
-export ANTHROPIC_API_KEY=sk-kimi-dTduiCjGrSWxqYB800BgO7YfAagzF7RPIbjBQiqE5WZ6cei8TaWUPZwmakRSFFdq
+export ANTHROPIC_API_KEY=sk-kimi-XCRCCLQGvdY0gaFuSYVNo4hGSFWhbNE1vwYLe9zDof1qdENEBEswzeNqw3EN56b2
 
 # pnpm
 export PNPM_HOME="/Users/wangyiran/Library/pnpm"

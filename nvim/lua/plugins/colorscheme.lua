@@ -1,14 +1,12 @@
 return {
   {
-    "folke/tokyonight.nvim",
-    opts = {
-      style = "night",
-    },
+    "akinsho/horizon.nvim",
+    version = "*",
   },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "tokyonight",
+      colorscheme = "horizon",
     },
   },
 }

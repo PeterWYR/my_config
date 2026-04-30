@@ -1,10 +1,23 @@
 {
+    "project_panel": {
+        "dock": "right"
+    },
+    "outline_panel": {
+        "dock": "right"
+    },
+    "collaboration_panel": {
+        "dock": "right"
+    },
+    "git_panel": {
+        "dock": "right"
+    },
     "theme": {
         "mode": "dark",
         "light": "One Light",
         "dark": "Tokyo Night",
     },
     "agent": {
+        "dock": "left",
         "default_model": {
             "effort": "medium",
             "provider": "zed.dev",
