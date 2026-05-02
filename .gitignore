@@ -5,3 +5,4 @@ github-copilot/*
 *.mdb-lock
 zed/prompts/prompts-library-db.0.mdb/
 zed/conversations/
+.DS_Store

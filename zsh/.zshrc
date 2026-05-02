@@ -115,6 +115,7 @@ export SDKMAN_DIR="/Users/wangyiran/.sdkman"
 export PATH="$HOME/nvim-macos-arm64/bin:$PATH"
 export ENABLE_TOOL_SEARCH=false
 
+export ANTHROPIC_MODEL=opus-4.6
 export ANTHROPIC_BASE_URL=https://api.kimi.com/coding/
 export ANTHROPIC_API_KEY=sk-kimi-XCRCCLQGvdY0gaFuSYVNo4hGSFWhbNE1vwYLe9zDof1qdENEBEswzeNqw3EN56b2
 

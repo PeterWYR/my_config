@@ -1,151 +1,205 @@
-# ==========================================================
-# Starship full config (Dracula-ish, minimal icons)
-# File: ~/.config/starship.toml
-# ==========================================================
+"$schema" = 'https://starship.rs/config-schema.json'
 
-add_newline = false
-command_timeout = 800
-scan_timeout = 30
+[aws]
+symbol = " "
 
-# Use a palette close to Dracula.
-palette = "dracula"
+[buf]
+symbol = " "
 
-# Single-line prompt: directory + git + python venv + (optional langs) + prompt char
-format = """
-$directory\
-$git_branch\
-$git_status\
-$python\
-$nodejs\
-$rust\
-$golang\
-$java\
-$character"""
+[bun]
+symbol = " "
 
-# ----------------------------------------------------------
-# Dracula palette
-# ----------------------------------------------------------
-[palettes.dracula]
-bg      = "#282a36"
-fg      = "#f8f8f2"
-comment = "#6272a4"
-cyan    = "#8be9fd"
-green   = "#50fa7b"
-orange  = "#ffb86c"
-pink    = "#ff79c6"
-purple  = "#bd93f9"
-red     = "#ff5555"
-yellow  = "#f1fa8c"
+[c]
+symbol = " "
 
-# ----------------------------------------------------------
-# Core blocks
-# ----------------------------------------------------------
+[cpp]
+symbol = " "
+
+[cmake]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[crystal]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[deno]
+symbol = " "
+
 [directory]
-truncation_length = 3
-truncate_to_repo = true
-home_symbol = "~"
-read_only = " "
-# show path with a trailing space
-format = "[$path]($style) "
-style = "bold purple"
+read_only = " 󰌾"
 
-[character]
-success_symbol = "[❯](bold cyan)"
-error_symbol   = "[❯](bold red)"
-vimcmd_symbol  = "[❮](bold green)"
+[docker_context]
+symbol = " "
 
-# ----------------------------------------------------------
-# Git
-# ----------------------------------------------------------
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[fennel]
+symbol = " "
+
+[fortran]
+symbol = " "
+
+[fossil_branch]
+symbol = " "
+
+[gcloud]
+symbol = " "
+
 [git_branch]
-symbol = " "
-format = "[$symbol$branch]($style) "
-style = "bold pink"
+symbol = " "
 
-[git_status]
-format = "[$all_status$ahead_behind]($style) "
-style = "bold orange"
-
-conflicted = "[≠](bold red)"
-modified   = "[!](bold yellow)"
-staged     = "[+](bold green)"
-untracked  = "[?](bold comment)"
-deleted    = "[✘](bold red)"
-renamed    = "[»](bold cyan)"
-stashed    = "[$](bold comment)"
-
-ahead      = "[⇡${count}](bold cyan)"
-behind     = "[⇣${count}](bold cyan)"
-diverged   = "[⇕⇡${ahead_count}⇣${behind_count}](bold cyan)"
-
-# ----------------------------------------------------------
-# Python (venv / conda)
-# ----------------------------------------------------------
-[python]
-symbol = " "
-format = "[$symbol $virtualenv ($version)]($style) "
-style = "bold green"
-# Optional: be stricter about when python module shows up
-# detect_extensions = ["py"]
-# detect_files = ["pyproject.toml", "requirements.txt", "Pipfile", "poetry.lock", "setup.py"]
-
-# If you want version too, use:
-# format = "[$symbol$virtualenv ($version)]($style) "
-
-# ----------------------------------------------------------
-# Optional languages (kept minimal; only show when relevant)
-# ----------------------------------------------------------
-[nodejs]
-symbol = " "
-format = "[$symbol$version]($style) "
-style = "bold green"
-
-[rust]
-symbol = " "
-format = "[$symbol$version]($style) "
-style = "bold orange"
+[git_commit]
+tag_symbol = '  '
 
 [golang]
 symbol = " "
-format = "[$symbol$version]($style) "
-style = "bold cyan"
+
+[gradle]
+symbol = " "
+
+[guix_shell]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[haxe]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[hostname]
+ssh_symbol = " "
 
 [java]
 symbol = " "
-format = "[$symbol$version]($style) "
-style = "bold red"
 
-# ----------------------------------------------------------
-# Keep things uncluttered: disable modules you likely don't want
-# (delete any you actually want)
-# ----------------------------------------------------------
-[aws]
-disabled = true
-[gcloud]
-disabled = true
-[kubernetes]
-disabled = true
-[docker_context]
-disabled = true
+[julia]
+symbol = " "
+
+[kotlin]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[memory_usage]
+symbol = "󰍛 "
+
+[meson]
+symbol = "󰔷 "
+
+[nim]
+symbol = "󰆥 "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[ocaml]
+symbol = " "
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+AlmaLinux = " "
+Amazon = " "
+Android = " "
+AOSC = " "
+Arch = " "
+Artix = " "
+CachyOS = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Elementary = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Ios = "󰀷 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+Nobara = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+RockyLinux = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
+Windows = "󰍲 "
+Zorin = " "
+
 [package]
-disabled = true
-[cmake]
-disabled = true
-[helm]
-disabled = true
-[terraform]
-disabled = true
+symbol = "󰏗 "
 
-# ----------------------------------------------------------
-# Timing / last exit (optional but useful, subtle)
-# ----------------------------------------------------------
-[cmd_duration]
-min_time = 800
-format = "[⏱ $duration]($style) "
-style = "comment"
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[pijul_channel]
+symbol = " "
+
+[pixi]
+symbol = "󰏗 "
+
+[python]
+symbol = " "
+
+[rlang]
+symbol = "󰟔 "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = "󱘗 "
+
+[scala]
+symbol = " "
 
 [status]
-disabled = true  # turn on if you want non-zero exit code indicators
-# format = "[$symbol$status]($style) "
-# symbol = "✘ "
-# style = "bold red"
+symbol = " "
+
+[swift]
+symbol = " "
+
+[xmake]
+symbol = " "
+
+[zig]
+symbol = " "
