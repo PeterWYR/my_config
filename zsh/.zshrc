@@ -62,6 +62,9 @@ eval "$(starship init zsh)"
 bindkey -v
 export KEYTIMEOUT=1
 
+# Let Ctrl-s reach tmux instead of terminal flow control.
+[[ -t 0 ]] && stty -ixon 2>/dev/null
+
 function _cursor_block() { print -n -- $'\e[2 q' }
 function zle-line-init() { _cursor_block }
 zle -N zle-line-init
@@ -85,7 +88,10 @@ alias o='orb'
 alias cc='claude'
 alias co='codex'
 alias ge='gemini'
+alias ag='agy'
 alias n='node'
+alias md='mkdir'
+alias ds='deepseek'
 
 export EDITOR=nvim
 export VISUAL=nvim
@@ -115,9 +121,6 @@ export SDKMAN_DIR="/Users/wangyiran/.sdkman"
 export PATH="$HOME/nvim-macos-arm64/bin:$PATH"
 export ENABLE_TOOL_SEARCH=false
 
-export ANTHROPIC_MODEL=opus-4.6
-export ANTHROPIC_BASE_URL=https://api.kimi.com/coding/
-export ANTHROPIC_API_KEY=sk-kimi-XCRCCLQGvdY0gaFuSYVNo4hGSFWhbNE1vwYLe9zDof1qdENEBEswzeNqw3EN56b2
 
 # pnpm
 export PNPM_HOME="/Users/wangyiran/Library/pnpm"
@@ -126,3 +129,7 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/wangyiran/.local/bin:$PATH"

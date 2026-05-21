@@ -75,8 +75,35 @@
 ;; they are implemented.
 
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-;; Theme: match Ghostty/tmux Tokyo Night colors.
-(setq doom-theme 'doom-tokyo-night)
+;; Theme: match Ghostty's Horizon colors.
+(setq doom-theme 'doom-horizon)
+
+(defun my/doom-dashboard-widget-banner ()
+  "Insert a custom EMACS banner on the Doom dashboard."
+  (let* ((banner
+          '(" _____ __  __    _    ____ ____  "
+            "| ____|  \\/  |  / \\  / ___/ ___| "
+            "|  _| | |\\/| | / _ \\| |   \\___ \\ "
+            "| |___| |  | |/ ___ \\ |___ ___) |"
+            "|_____|_|  |_/_/   \\_\\____|____/ "))
+         (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+     (point)
+     (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                (concat line
+                        (make-string (max 0 (- longest-line (length line)))
+                                     ? )))
+               "\n"))
+     'face 'doom-dashboard-banner)
+    (insert "\n\n")))
+
+(setq +doom-dashboard-functions
+      (cons #'my/doom-dashboard-widget-banner
+            (remove #'doom-dashboard-widget-banner
+                    (remove #'my/doom-dashboard-widget-banner
+                            +doom-dashboard-functions))))
 
 ;; Relative numbers match the Neovim setup and make count motions easier.
 (setq display-line-numbers-type 'relative

@@ -110,6 +110,9 @@ vim.o.mouse = 'a'
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
 
+-- Match the terminal colors accurately.
+vim.o.termguicolors = true
+
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -169,13 +172,28 @@ vim.o.confirm = true
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<leader><CR>', '<cmd>nohlsearch<CR>')
 
 vim.keymap.set('n', '=', 'nzz', { desc = 'Next search result centered' })
 vim.keymap.set('n', '-', 'Nzz', { desc = 'Previous search result centered' })
 vim.keymap.set('n', 'n', '^', { desc = 'Go to first non-blank character' })
 vim.keymap.set('n', 'm', '$', { desc = 'Go to end of line' })
 vim.keymap.set('n', 't', '%', { desc = 'Go to matching pair' })
+
+-- T-shaped ijkl movement (i=up, j=left, k=down, l=right)
+--vim.keymap.set({ 'n', 'v' }, 'i', '<Up>', { desc = 'Move up' })
+--vim.keymap.set({ 'n', 'v' }, 'j', '<Left>', { desc = 'Move left' })
+--vim.keymap.set({ 'n', 'v' }, 'k', '<Down>', { desc = 'Move down' })
+--vim.keymap.set({ 'n', 'v' }, 'l', '<Right>', { desc = 'Move right' })"
+
+-- s to enter insert mode (replaces i)
+--vim.keymap.set('n', 's', 'i', { desc = 'Enter insert mode' })
+
+-- Capital IJKL for 7-unit jumps
+--vim.keymap.set({ 'n', 'v' }, 'I', '7<Up>', { desc = 'Jump up 7 lines' })
+--vim.keymap.set({ 'n', 'v' }, 'J', '7<Left>', { desc = 'Jump left 7 characters' })
+--vim.keymap.set({ 'n', 'v' }, 'K', '7<Down>', { desc = 'Jump down 7 lines' })
+--vim.keymap.set({ 'n', 'v' }, 'L', '7<Right>', { desc = 'Jump right 7 characters' })
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
@@ -811,15 +829,6 @@ require('lazy').setup({
     },
   },
 
-  {
-    'LunarVim/horizon.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      vim.o.background = 'dark'
-      vim.cmd.colorscheme 'horizon'
-    end,
-  },
-
   -- Highlight todo, notes, etc in comments
   {
     'folke/todo-comments.nvim',
@@ -851,10 +860,20 @@ require('lazy').setup({
 
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
-      -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-      -- - sd'   - [S]urround [D]elete [']quotes
-      -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
+      -- - gsaiw) - [G]oto [S]urround [A]dd [I]nner [W]ord [)]Paren
+      -- - gsd'   - [G]oto [S]urround [D]elete [']quotes
+      -- - gsr)'  - [G]oto [S]urround [R]eplace [)] [']
+      require('mini.surround').setup {
+        mappings = {
+          add = 'sa',
+          delete = 'sd',
+          find = 'sf',
+          find_left = 'sF',
+          highlight = 'sh',
+          replace = 'sr',
+          update_n_lines = 'sn',
+        },
+      }
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
@@ -944,14 +963,14 @@ require('lazy').setup({
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommended keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
