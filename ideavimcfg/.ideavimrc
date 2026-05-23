@@ -1,0 +1,154 @@
+let mapleader=" "
+set showcmd
+set relativenumber
+set hlsearch
+exec "nohlsearch"
+set incsearch
+set ignorecase
+set smartcase
+set mouse=a
+set encoding=utf-8
+let &t_ut=''
+set timeout
+set timeoutlen=300
+
+" T-shaped ijkl navigation
+"nnoremap i k
+"nnoremap I 5k
+"nnoremap k j
+"nnoremap K 5j
+"nnoremap j h
+"nnoremap J 7h
+"nnoremap l l
+"nnoremap L 7l
+" Use s for insert because i is now move-up
+"nnoremap s i
+"nnoremap h <Nop>
+
+"inoremap jk <esc>
+"vnoremap jk <esc>
+"inoremap kj <esc>
+"vnoremap kj <esc>
+noremap <leader><cr> :nohlsearch<cr>
+
+nnoremap t %
+nnoremap Q :q<CR>
+nnoremap S :w<CR>
+
+nnoremap U <c-r>
+" n key: go to the start of the line
+nnoremap n ^
+" i key: go to the end of the line
+nnoremap m $
+noremap = nzz
+noremap - Nzz
+
+set guicursor=n-v-c:block-cursor,i-ci-ve:ver25-cursor
+
+
+vnoremap <leader>em :action extractmethod<cr>        
+vnoremap <leader>ev :action introducevariable<cr>
+
+nnoremap <C-c>d mzYp`z
+nnoremap <C-c>D mzYp`z
+
+" ===== jupyter notebook compatibility =====
+nmap <s-cr> <action>(executecellandselectbelow)
+imap <s-cr> <action>(executecellandselectbelow)
+vmap <s-cr> <action>(executecellandselectbelow)
+
+" paste over without overwriting default register
+xnoremap p p
+" sync vim clipboard with os clipboard
+set clipboard^=unnamed,unnamed plus
+" jump between angle brackets
+set matchpairs+=<:>
+
+
+" smart line joining
+set ideajoin
+
+" open config
+noremap <leader>cc :edit ~/.ideavimrc<cr>
+
+" move to the beginning of the next word
+map w [w
+
+" move to the end of the next word
+map e ]w
+
+" move to the beginning of the previous word
+map b [b
+
+" move to the end of the previous word
+map ge ]b
+
+map <leader>wv <Action>(SplitVertically)
+map <leader>ws <Action>(SplitHorizontally)
+map <leader>ww <Action>(Unsplit)
+map <leader>wa <Action>(UnsplitAll)
+map <leader>wh <C-w>h
+map <leader>wj <C-w>j
+map <leader>wk <C-w>k
+map <leader>wl <C-w>l
+
+
+map <leader>sf <action>(gotofile)
+map <leader>sc <action>(gotoclass)
+map <leader>ss <action>(gotosymbol)
+map <leader>sa <action>(gotoaction)
+map <leader>gd <action>(gotodeclaration)
+map <leader>gy <action>(gototypedeclaration)
+map <leader>gi <action>(gotoimplementation)
+map <leader>gt <action>(gototest)
+map <leader>gm <action>(gotosupermethod)
+map <leader>gl <action>(gotoline)
+
+map <leader>ug <action>(findusages)
+map <leader>uu <action>(showusages)
+map <leader>vs <action>(viewsource)
+map <leader>im <action>(quickimplementations)
+map <leader>td <action>(quicktypedefinition)
+map <leader>ti <action>(expressiontypeinfo)
+map <leader>sh <action>(showhoverinfo)
+map <leader>oo <action>(filestructurepopup)
+
+map <leader>rn <action>(renameelement)
+map <leader>rm <action>(extractmethod)
+map <leader>rv <action>(introducevariable)
+map <leader>rf <action>(introducefield)
+map <leader>rs <action>(changesignature)
+map <leader>rr <action>(refactorings.quicklistpopupaction)
+
+map <leader>aa <action>(showintentionactions)
+map <leader>sw <action>(surroundwith)
+map <s-space> <action>(generate)
+map <c-a-,> <action>(editorduplicatelines)
+map <c-[> <action>(editorcompletestatement)
+
+
+map <leader>en <action>(gotonexterror)
+map <leader>ep <action>(gotopreviouserror)
+map <leader>lc <action>(jumptolastchange)
+map <leader>ll <action>(recentlocations)
+map <c-;> <action>(recentfiles)
+map <a-[> <action>(methodup)
+map <a-]> <action>(methoddown)
+
+map <leader>oi <action>(optimizeimports)
+map <leader>ra <action>(rearrangecode)
+
+map <d-i> <action>(movelineup)
+map <d-k> <action>(movelinedown)
+map <c-a-i> <action>(movestatementup)
+map <c-a-k> <action>(movestatementdown)
+map <leader>ca <action>(copyabsolutepath)
+map <leader>cn <action>(copyfilename)
+map <leader>cp <action>(copycontentrootpath)
+
+map <leader>nf <action>(newfile)
+map <leader>nd <action>(newdir)
+map <leader>qa <action>(closealleditors)
+map <leader>re <action>(renamefile)
+map <leader>of <action>(openfile)
+map <leader>ri <action>(restartide)
