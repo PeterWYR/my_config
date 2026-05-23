@@ -1,0 +1,423 @@
+{
+    // ==========================================
+    // 1. 编辑器基础配置 (Editor Settings)
+    // ==========================================
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": true,
+        "strings": true,
+    },
+    // 禁用基于语言智能生成的建议，只留简单的单词
+    "editor.suggest.showMethods": true,
+    "editor.suggest.showFunctions": true,
+    "editor.suggest.showConstructors": true,
+    "editor.suggest.showVariables": true,
+    "editor.suggest.showInterfaces": true,
+    "editor.tabSize": 4,
+    "editor.fontSize": 16,
+    "editor.fontFamily": "IosevkaTerm Nerd Font Mono",
+    "editor.fontLigatures": true,
+    "editor.showFoldingControls": "never",
+    "editor.guides.indentation": true,
+    "editor.lineHeight": 2.3,
+    "editor.lineNumbers": "relative",
+    "editor.detectIndentation": false,
+    "extensions.ignoreRecommendations": true,
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.smoothScrolling": true,
+    "editor.renderWhitespace": "none",
+    "editor.renderLineHighlight": "all",
+    "editor.selectionHighlight": true,
+    "editor.scrollbar.horizontalScrollbarSize": 20,
+    "editor.overviewRulerBorder": false,
+    "editor.tabCompletion": "on",
+    "editor.snippetSuggestions": "top",
+    "emmet.triggerExpansionOnTab": true,
+    "update.mode": "none",
+    "editor.links": true,
+    "files.autoSave": "afterDelay",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": false,
+    "breadcrumbs.enabled": false,
+    "workbench.tips.enabled": false,
+    "material-icon-theme.hidesExplorerArrows": true,
+    "workbench.tree.enableStickyScroll": true,
+    "workbench.tree.indent": 14,
+    "workbench.editor.showTabs": "single",
+    "workbench.startupEditor": "none",
+    "workbench.list.smoothScrolling": true,
+    "workbench.navigationControl.enabled": false,
+    "window.zoomLevel": 2,
+    "window.titleBarStyle": "native",
+    "custom-ui-style.electron": {
+        "titleBarStyle": "hiddenInset",
+        "trafficLightPosition": {
+            "x": 20,
+            "y": 20,
+        },
+    },
+    "custom-ui-style.stylesheet": {
+        ".notification-toast": "box-shadow: none !important",
+        ".quick-input-widget.show-file-icons": "box-shadow: none !important",
+        ".quick-input-widget": "top: 25vh !important",
+        ".quick-input-list .scrollbar": "display: none",
+        ".monaco-action-bar.quick-input-inline-action-bar": "display: none",
+        ".editor-widget.find-widget": "box-shadow: none; border-radius: 4px",
+        ".quick-input-titlebar": "background: #100B15 !important",
+        ".monaco-workbench .part.editor > .content .editor-group-container > .title.title-border-bottom:after": "display: none",
+        ".monaco-scrollable-element > .shadow.top": "display: none",
+        ".sidebar .title-label": "padding: 0 !important",
+        ".sidebar": "border: none !important",
+        ".monaco-workbench .monaco-list:not(.element-focused):focus:before": "outline: none !important",
+        ".monaco-list-row.focused": "outline: none !important",
+        ".monaco-editor .scroll-decoration": "display: none",
+        ".title-actions": "display: none !important",
+        ".title.show-file-icons .label-container .monaco-icon-label.file-icon": "justify-content: center; padding: 0 !important",
+        ".title .monaco-icon-label:after": "margin-right: 0",
+        ".monaco-workbench .part.editor > .content .editor-group-container > .title > .label-container > .title-label": "padding-left: 60px",
+        ".title .monaco-icon-label.file-icon": "margin: 0 60px",
+        ".monaco-editor .cursors-layer .cursor": "background-image: linear-gradient(135deg, #FFFFFF 10%, #FFFFFF 100%)",
+    },
+    "custom-ui-style.font.sansSerif": "Iosevka Nerd Font",
+    "window.commandCenter": false,
+    "editor.multiCursorModifier": "ctrlCmd",
+
+    // ==========================================
+    // 3. VIM 核心配置 (Vim Keybindings)
+    // ==========================================
+    "vim.leader": " ",
+    "vim.timeout": 300,
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-f>": false,
+        "j": true,
+        "k": true,
+        "i": true,
+        "l": true,
+    },
+    "extensions.experimental.affinity": {
+        "vscodevim.vim": 1,
+    },
+
+    // 插入模式映射 (Insert Mode)
+    "vim.insertModeKeyBindings": [
+        // {
+        //     "before": ["j", "k"],
+        //     "after": ["<Esc>"],
+        // },
+        // {
+        //     "before": ["k", "j"],
+        //     "after": ["<Esc>"],
+        // },
+    ],
+    "vim.cursorStylePerMode.insert": "line",
+    "vim.cursorStylePerMode.replace": "underline",
+    "vim.visualModeKeyBindingsNonRecursive": [
+        // {
+        //     "before": ["s"],
+        //     "after": [],
+        // },
+        // {
+        //     "before": [""],
+        //     "after": [],
+        // },
+        // {
+        //     "before": ["i"],
+        //     "after": ["k"],
+        // },
+        // {
+        //     "before": ["k"],
+        //     "after": ["j"],
+        // },
+        // {
+        //     "before": ["j"],
+        //     "after": ["h"],
+        // },
+        // {
+        //     "before": ["l"],
+        //     "after": ["l"],
+        // },
+        // {
+        //     "before": ["s"],
+        //     "after": ["i"],
+        // },
+        // {
+        //     "before": ["h"],
+        //     "after": [],
+        // },
+        // {
+        //     "before": ["I"],
+        //     "after": ["5", "k"],
+        // },
+        // {
+        //     "before": ["K"],
+        //     "after": ["5", "j"],
+        // },
+        // {
+        //     "before": ["J"],
+        //     "after": ["7", "h"],
+        // },
+        // {
+        //     "before": ["L"],
+        //     "after": ["7", "l"],
+        // },
+    ],
+    // 普通模式映射 (Normal Mode)
+    "vim.normalModeKeyBindingsNonRecursive": [
+        // {
+        //     "before": ["i"],
+        //     "after": ["k"],
+        // },
+        // {
+        //     "before": ["k"],
+        //     "after": ["j"],
+        // },
+        // {
+        //     "before": ["j"],
+        //     "after": ["h"],
+        // },
+
+        // {
+        //     "before": ["s"],
+        //     "after": ["i"],
+        // },
+        // {
+        //     "before": ["h"],
+        //     "after": [],
+        // },
+        // {
+        //     "before": ["I"],
+        //     "after": ["5", "k"],
+        // },
+        // {
+        //     "before": ["K"],
+        //     "after": ["5", "j"],
+        // },
+        // {
+        //     "before": ["J"],
+        //     "after": ["7", "h"],
+        // },
+
+        // 搜索居中
+        { "before": ["="], "after": ["n", "z", "z"] },
+        { "before": ["-"], "after": ["N", "z", "z"] },
+
+        { "before": ["t"], "after": ["%"] },
+        {
+            "before": ["<C-j>"],
+            "commands": ["notebook.focusNextEditor"],
+        },
+        {
+            "before": ["<C-k>"],
+            "commands": ["notebook.focusPreviousEditor"],
+        },
+
+        // 功能键映射
+        { "before": ["S"], "commands": ["workbench.action.files.save"] },
+        { "before": ["Q"], "commands": ["workbench.action.closeActiveEditor"] },
+        { "before": ["<leader>", "d"], "after": ["d", "d"] },
+        {
+            "before": ["n"],
+            "after": ["^"],
+        },
+        {
+            "before": ["m"],
+            "after": ["$"],
+        },
+        {
+            "before": ["<leader>", "o"],
+            "commands": ["editor.action.insertLineAfter"],
+            "silent": true,
+        },
+        {
+            "before": ["<leader>", "q"],
+            "commands": ["workbench.action.togglePanel"],
+        },
+        {
+            "before": ["<leader>", "<CR>"],
+            "commands": [":nohl"],
+        },
+    ],
+
+    // ==========================================
+    // 4. 终端与外部工具 (Terminal / Tools)
+    // ==========================================
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    //"terminal.integrated.fontFamily": "JetBrainsMono Nerd Font Mono",
+    "terminal.integrated.fontFamily": "Iosevka Nerd Font",
+    "terminal.integrated.fontSize": 14,
+    "terminal.integrated.smoothScrolling": true,
+    "terminal.integrated.fontLigatures.enabled": true,
+    "git.openRepositoryInParentFolders": "never",
+    "security.workspace.trust.untrustedFiles": "open",
+
+    // ==========================================
+    // 5. Code Runner 语言执行映射
+    // ==========================================
+    "code-runner.executorMap": {
+        "python": "python3 -u",
+        "php": "/opt/homebrew/bin/php",
+        "go": "/opt/homebrew/bin/go run",
+        "cpp": "cd $dir && clang++ -std=c++23 $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
+        "c": "cd $dir && clang $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
+        "javascript": "node",
+        "typescript": "node",
+    },
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.languageIdToFileExtensionMap": {
+        "bat": ".bat",
+        "powershell": ".ps1",
+        "typescript": ".ts",
+    },
+    "code-runner.executorMapByGlob": {
+        "pom.xml": "cd $dir && mvn clean package",
+    },
+    "code-runner.saveFileBeforeRun": true,
+
+    // ==========================================
+    // 6. 插件特定配置 (APC / CSS / Animations)
+    // ==========================================
+
+    // Custom CSS & JS Loader
+    "vscode_custom_css.imports": [
+        "file:///Users/wangyiran/.vscode/extensions/brandonkirbyson.vscode-animations-2.0.7/dist/updateHandler.js",
+    ],
+    "vscode_custom_css.policy": true,
+
+    // Animations 插件
+    "animations.Install-Method": "Custom CSS and JS",
+    "animations.UseCursorColorForCursorAnimation": true,
+    "animations.CursorAnimationOptions": {
+        "Color": "#FFFFFF",
+        "TrailLength": 8,
+    },
+    "animations.Durations": { "Command-Palette": 1000 },
+    "animations.Command-Palette": "None",
+    "animations.Active": "None",
+    "animations.Scrolling": "None",
+    "animations.Tabs": "None",
+    "animations.CursorAnimation": true,
+
+    // 其他扩展
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true, // 建议开启，保存时自动格式化
+    "explorer.compactFolders": false,
+    "[java]": {
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.defaultFormatter": "redhat.java",
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+    },
+    "chat.commandCenter.enabled": false,
+    "python.defaultInterpreterPath": "/Users/wangyiran/.pyenv/shims/python3",
+    "php.validate.executablePath": "/opt/homebrew/bin/php",
+    "php.executablePath": "/opt/homebrew/bin/php",
+
+    // Go 配置
+    "go.alternateTools": {
+        "go": "/opt/homebrew/bin/go",
+    },
+    "java.jdt.ls.java.home": "/Users/wangyiran/.sdkman/candidates/java/current",
+    "[c]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools",
+    },
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+    "animations.Enabled": true,
+    "chat.viewSessions.orientation": "stacked",
+    "workbench.productIconTheme": "a-file-icon-vscode-product-icon-theme",
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false,
+        "java": false,
+    },
+    "editor.stickyTabStops": true,
+    "coderunner.executorMapByFileExtension": {
+        ".vb": "cd $dir && vbc /nologo $fileName && $dir$fileNameWithoutExt",
+        ".vbs": "cscript //Nologo",
+        ".scala": "scala",
+        ".jl": "julia",
+        ".cr": "crystal",
+        ".ml": "ocaml",
+        ".zig": "zig run",
+        ".exs": "elixir",
+        ".hx": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+        ".rkt": "racket",
+        ".scm": "csi -script",
+        ".ahk": "autohotkey",
+        ".au3": "autoit3",
+        ".kt": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar",
+        ".kts": "kotlinc -script",
+        ".dart": "dart",
+        ".pas": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+        ".pp": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+        ".d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+        ".hs": "runhaskell",
+        ".nim": "nim compile --verbosity:0 --hints:off --run",
+        ".csproj": "dotnet run --project",
+        ".fsproj": "dotnet run --project",
+        ".lisp": "sbcl --script",
+        ".kit": "kitc --run",
+        ".v": "v run",
+        ".vsh": "v run",
+        ".sass": "sass --style expanded",
+        ".cu": "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        ".ring": "ring",
+        ".sml": "cd $dir && sml $fileName",
+        ".mojo": "mojo run",
+        ".erl": "escript",
+        ".spwn": "spwn build",
+        ".pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
+        ".gleam": "gleam run -m $fileNameWithoutExt",
+    },
+    "prettier.tabWidth": 4,
+    "rust-analyzer.statusBar.showStatusBar": {
+        "documentSelector": [
+            {
+                "language": "rust",
+            },
+            {
+                "pattern": "**/Cargo.toml",
+            },
+            {
+                "pattern": "**/Cargo.lock",
+            },
+            {
+                "scheme": "output",
+                "pattern": "extension-output-rust-lang.rust-analyzer*",
+            },
+        ],
+    },
+    "[lua]": {
+        "editor.defaultFormatter": "Koihik.vscode-lua-format",
+    },
+    "workbench.iconTheme": "catppuccin-perfect-monokai",
+    "http.systemCertificatesNode": true,
+    "geminicodeassist.project": "gold-acre-d18v3",
+    "geminicodeassist.inlineSuggestions.enableAuto": false,
+    "terminal.external.osxExec": "Wezterm.app",
+    "geminicodeassist.displayInlineContextHint": false,
+    "workbench.sideBar.location": "right",
+    "workbench.activityBar.location": "top",
+    "claudeCode.selectedModel": "default",
+    "workbench.layoutControl.enabled": false,
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools",
+    },
+    "C_Cpp.formatting": "clangFormat",
+    "editor.inlineSuggest.enabled": false,
+    "workbench.colorTheme": "Bearded Theme Monokai Reversed",
+    "code-runner.runInTerminal": true,
+    "editor.cursorBlinking": "solid",
+    "liveServer.settings.donotShowInfoMsg": true,
+    "editor.showUnused": false,
+}
+
