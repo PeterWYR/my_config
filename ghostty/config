@@ -50,12 +50,14 @@
 
 #=================== PeterWYR's Ghostty config=====================
 # Basic Config
-window-padding-x = 8
-window-padding-y = 8
-theme = Horizon
-font-family = "IosevkaTerm Nerd Font"
+window-padding-x = 12,4
+window-padding-y = 12,4
+theme = Rose Pine
+font-family = "IosevkaTerm Nerd Font Mono"
 font-size = 22
 font-thicken = false
+font-style-italic = false
+font-style-bold-italic = false
 macos-titlebar-style = hidden
 quit-after-last-window-closed = true
 background-opacity = 1.0
@@ -100,6 +102,7 @@ keybind = cmd+o=text:\x1bo
 custom-shader = "~/.config/ghostty/shaders/cursor_smear.glsl"
 cursor-style = block
 cursor-style-blink = false
+adjust-cell-height = 15%
 
 # 将 Cmd+D 覆盖为 Tmux 的垂直分屏 (发送 Ctrl+s 然后按 %)
 #keybind = cmd+d=text:\x13%

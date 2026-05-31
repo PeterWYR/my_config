@@ -9,6 +9,21 @@ return {
     priority = 1000,
   },
 
+  -- Rose Pine Theme (Default)
+  {
+    'rose-pine/neovim',
+    name = 'rose-pine',
+    priority = 1000,
+    lazy = false,
+    config = function()
+      require('rose-pine').setup({
+        variant = 'main',
+        dark_variant = 'main',
+      })
+      vim.cmd.colorscheme 'rose-pine'
+    end,
+  },
+
   -- Tokyo Night Theme
   {
     'folke/tokyonight.nvim',
@@ -21,15 +36,8 @@ return {
     priority = 1000,
   },
 
-  -- Horizon Theme (Default)
-  {
-    'lunarvim/horizon.nvim',
-    priority = 1000,
-    lazy = false,
-    config = function()
-      vim.cmd.colorscheme 'horizon'
-    end,
-  },
+  -- Horizon Theme
+  { 'lunarvim/horizon.nvim' },
 
   -- Theme Switcher via Telescope
   {

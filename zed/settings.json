@@ -1,27 +1,27 @@
 {
     "project_panel": {
-        "dock": "right"
+        "dock": "right",
     },
     "outline_panel": {
-        "dock": "right"
+        "dock": "right",
     },
     "collaboration_panel": {
-        "dock": "right"
+        "dock": "right",
     },
     "git_panel": {
-        "dock": "right"
+        "dock": "right",
     },
     "theme": {
         "mode": "dark",
-        "light": "One Light",
-        "dark": "Horizon",
+        "light": "Rosé Pine Dawn",
+        "dark": "Rosé Pine",
     },
     "agent": {
         "dock": "left",
         "default_model": {
             "effort": "medium",
             "provider": "zed.dev",
-            "model": "gpt-5.4",
+            "model": "gpt-5.5",
             "enable_thinking": true,
         },
         "favorite_models": [
@@ -34,16 +34,16 @@
         "model_parameters": [],
     },
     "icon_theme": {
-        "mode": "light",
+        "mode": "dark",
         "light": "Bearded Icon Theme",
         "dark": "Bearded Icon Theme",
     },
     "file_finder": {
         "modal_max_width": "large",
     },
-    "ui_font_family": "IosevkaTerm Nerd Font",
+    "ui_font_family": "FiraCode Nerd Font Mono",
     "ui_font_size": 20,
-    "buffer_font_family": "IosevkaTerm Nerd Font",
+    "buffer_font_family": "FiraCode Nerd Font Mono",
     "buffer_font_size": 20,
     "buffer_line_height": {
         "custom": 2,

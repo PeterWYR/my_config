@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -194,6 +194,10 @@ vim.keymap.set('n', 't', '%', { desc = 'Go to matching pair' })
 --vim.keymap.set({ 'n', 'v' }, 'J', '7<Left>', { desc = 'Jump left 7 characters' })
 --vim.keymap.set({ 'n', 'v' }, 'K', '7<Down>', { desc = 'Jump down 7 lines' })
 --vim.keymap.set({ 'n', 'v' }, 'L', '7<Right>', { desc = 'Jump right 7 characters' })
+
+-- jk / kj to escape insert mode
+vim.keymap.set('i', 'jk', '<Esc>', { desc = 'Exit insert mode' })
+vim.keymap.set('i', 'kj', '<Esc>', { desc = 'Exit insert mode' })
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
@@ -344,6 +348,7 @@ require('lazy').setup({
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
         { 'gr', group = 'LSP Actions', mode = { 'n' } },
+        { '<leader>m', group = '[M]arkdown' },
       },
     },
   },
