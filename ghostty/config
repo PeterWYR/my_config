@@ -58,42 +58,30 @@ font-size = 22
 font-thicken = false
 font-style-italic = false
 font-style-bold-italic = false
-macos-titlebar-style = hidden
 quit-after-last-window-closed = true
 background-opacity = 1.0
 background-blur = false
 term = xterm-256color
 
-# --- 1. 窗口切换 (Cmd+1~9 -> 映射为 Alt+1~9) ---
-# 先把 Ghostty 自己的 cmd+1..9（切 tab）解绑
-keybind = cmd+digit_1=unbind
-keybind = cmd+digit_2=unbind
-keybind = cmd+digit_3=unbind
-keybind = cmd+digit_4=unbind
-keybind = cmd+digit_5=unbind
-keybind = cmd+digit_6=unbind
-keybind = cmd+digit_7=unbind
-keybind = cmd+digit_8=unbind
-keybind = cmd+digit_9=unbind
+# 分屏分隔线颜色 (Rosé Pine)
+split-divider-color = #c4a7e7
 
-# 再让 cmd+1..9 发出「ESC + 数字」（也就是 M-1..9 / Alt-1..9）
-keybind = cmd+digit_1=text:\x1b1
-keybind = cmd+digit_2=text:\x1b2
-keybind = cmd+digit_3=text:\x1b3
-keybind = cmd+digit_4=text:\x1b4
-keybind = cmd+digit_5=text:\x1b5
-keybind = cmd+digit_6=text:\x1b6
-keybind = cmd+digit_7=text:\x1b7
-keybind = cmd+digit_8=text:\x1b8
-keybind = cmd+digit_9=text:\x1b9
 
-# --- 2. 分屏切换 (Cmd+hjkl -> 映射为 Alt+hjkl) ---
+# --- 2. 分屏切换 (Cmd+hjkl -> 在 split 之间移动焦点) ---
 # h=左, j=下, k=上, l=右
-keybind = cmd+h=text:\x1bh
-keybind = cmd+j=text:\x1bj
-keybind = cmd+k=text:\x1bk
-keybind = cmd+l=text:\x1bl
+keybind = cmd+h=goto_split:left
+keybind = cmd+j=goto_split:down
+keybind = cmd+k=goto_split:up
+keybind = cmd+l=goto_split:right
 keybind = cmd+o=text:\x1bo
+
+# --- 3. 分屏 (像 kitty 一样统一用 cmd+enter) ---
+# auto: 沿较长的一边分屏 —— 宽的窗格往右分,分完变高之后再往下分
+keybind = cmd+enter=new_split:auto
+# 释放 cmd+shift+d (默认是往下分屏),留给别的用途
+keybind = cmd+shift+d=unbind
+# cmd+d 改成切换全屏 (原来 cmd+enter 干的活)
+keybind = cmd+d=toggle_fullscreen
 
 
 
@@ -102,10 +90,11 @@ keybind = cmd+o=text:\x1bo
 custom-shader = "~/.config/ghostty/shaders/cursor_smear.glsl"
 cursor-style = block
 cursor-style-blink = false
-adjust-cell-height = 15%
+cursor-opacity = 0.5
+adjust-cell-height = 20%
 
-# 将 Cmd+D 覆盖为 Tmux 的垂直分屏 (发送 Ctrl+s 然后按 %)
-#keybind = cmd+d=text:\x13%
 
-# 将 Cmd+Shift+D 覆盖为 Tmux 的水平分屏 (发送 Ctrl+s 然后按 ")
-#keybind = cmd+shift+d=text:\x13"
+# macos
+macos-titlebar-style = tabs
+# 藏掉左上角红绿灯,但保留 tab 栏
+macos-window-buttons = hidden

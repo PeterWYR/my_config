@@ -12,3 +12,16 @@ spell/
 lazy-lock.json
 
 .DS_Store
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true        # 用 n / N 在文件间跳转
+    line-numbers = true    # 显示行号
+    side-by-side = false   # 想要左右并排就改 true
+
+[merge]
+    conflictstyle = zdiff3

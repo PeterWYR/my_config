@@ -16,6 +16,9 @@ return {
         c3 = 'c3',
         c3i = 'c3',
         odin = 'odin',
+        nim = 'nim',
+        nims = 'nim',
+        nimble = 'nim',
       },
     }
 
@@ -51,6 +54,7 @@ return {
       swift = function(f) return { 'swift', f } end,
       c3 = function(f) return { 'c3c', 'compile-run', f } end,
       zig = function(f) return { 'zig', 'run', f } end,
+      nim = function(f) return { 'nim', 'r', '--hints:off', '--verbosity:0', f } end,
       odin = function(f)
         local dir = vim.fn.fnamemodify(f, ':h')
         return { 'odin', 'run', dir }
@@ -93,7 +97,7 @@ return {
       })
 
       -- Style the window
-      vim.api.nvim_set_option_value('winblend', 5, { win = win })
+      vim.api.nvim_set_option_value('winblend', 0, { win = win })
       vim.api.nvim_set_option_value('cursorline', true, { win = win })
       vim.api.nvim_set_option_value('wrap', true, { win = win })
 
@@ -227,17 +231,110 @@ return {
     end
 
     -----------------------------------------------------------
-    -- 4. Keymap: <leader>r to run code
+    -- 4. Interactive terminal run (supports stdin input)
     -----------------------------------------------------------
-    vim.keymap.set('n', '<leader>r', run_code, { desc = '[R]un Code' })
+    local function run_code_interactive()
+      -- Save the file first
+      vim.cmd('silent! write')
+
+      local filetype = vim.bo.filetype
+      local filepath = vim.fn.expand('%:p')
+
+      if filepath == '' then
+        vim.notify(' No file to run', vim.log.levels.WARN)
+        return
+      end
+
+      local runner = runners[filetype]
+      if not runner then
+        vim.notify(' No runner configured for filetype: ' .. filetype, vim.log.levels.WARN)
+        return
+      end
+
+      local cmd = runner(filepath)
+
+      -- Build a shell command string from the cmd table
+      local shell_cmd
+      if cmd[1] == 'sh' and cmd[2] == '-c' then
+        shell_cmd = cmd[3]
+      else
+        local parts = {}
+        for _, part in ipairs(cmd) do
+          table.insert(parts, vim.fn.shellescape(part))
+        end
+        shell_cmd = table.concat(parts, ' ')
+      end
+
+      -- Create floating window for terminal
+      local display_name = vim.fn.fnamemodify(filepath, ':t')
+      local buf = vim.api.nvim_create_buf(false, true)
+      vim.bo[buf].bufhidden = 'wipe'
+
+      local width = math.floor(vim.o.columns * 0.8)
+      local height = math.floor(vim.o.lines * 0.8)
+      local row = math.floor((vim.o.lines - height) / 2)
+      local col = math.floor((vim.o.columns - width) / 2)
+
+      local win = vim.api.nvim_open_win(buf, true, {
+        relative = 'editor',
+        width = width,
+        height = height,
+        row = row,
+        col = col,
+        style = 'minimal',
+        border = 'rounded',
+        title = ' 🖥  Interactive: ' .. display_name .. ' ',
+        title_pos = 'center',
+      })
+
+      vim.api.nvim_set_option_value('winblend', 0, { win = win })
+      vim.api.nvim_set_option_value('winhighlight', 'Normal:NormalFloat', { win = win })
+
+      -- Open a real terminal in this floating buffer
+      vim.fn.termopen(shell_cmd, {
+        on_exit = function(_, exit_code)
+          vim.schedule(function()
+            if not vim.api.nvim_win_is_valid(win) then return end
+            local icon = exit_code == 0 and '✅' or '❌'
+            vim.api.nvim_win_set_config(win, {
+              title = ' ' .. icon .. ' ' .. display_name .. ' (press q to close) ',
+              title_pos = 'center',
+            })
+          end)
+        end,
+      })
+
+      -- Start in terminal insert mode so user can type immediately
+      vim.cmd('startinsert')
+
+      -- Map q and <Esc> in normal mode to close (user can press <Esc> first to exit terminal mode, then q to close)
+      vim.keymap.set('n', 'q', function()
+        if vim.api.nvim_win_is_valid(win) then
+          vim.api.nvim_win_close(win, true)
+        end
+      end, { buffer = buf, nowait = true, desc = 'Close interactive runner window' })
+
+      vim.keymap.set('n', '<Esc>', function()
+        if vim.api.nvim_win_is_valid(win) then
+          vim.api.nvim_win_close(win, true)
+        end
+      end, { buffer = buf, nowait = true, desc = 'Close interactive runner window' })
+    end
 
     -----------------------------------------------------------
-    -- 5. Register with which-key (if available)
+    -- 5. Keymaps
+    -----------------------------------------------------------
+    vim.keymap.set('n', '<leader>r', run_code, { desc = '[R]un Code' })
+    vim.keymap.set('n', '<leader>R', run_code_interactive, { desc = '[R]un Code (Interactive)' })
+
+    -----------------------------------------------------------
+    -- 6. Register with which-key (if available)
     -----------------------------------------------------------
     local ok, wk = pcall(require, 'which-key')
     if ok then
       wk.add {
         { '<leader>r', desc = '[R]un Code' },
+        { '<leader>R', desc = '[R]un Code (Interactive)' },
       }
     end
   end,
