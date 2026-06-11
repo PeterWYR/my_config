@@ -41,12 +41,15 @@ fi
 # Initialize modules. (这一步会生成 compdef)
 source ${ZIM_HOME}/init.zsh
 source ~/my_config/zsh/fzf.zsh
+# fzf 的 completion.zsh 会把 Tab 抢去（只做路径补全），这里把 Tab 交还给 fzf-tab。
+# fzf 的 Ctrl-T / Ctrl-R / Alt-C 不受影响。
+enable-fzf-tab
 
 # ==========================================
 # 3. 终端 UI (Starship 必须在 Zim 之后！)
 # ==========================================
 eval "$(starship init zsh)"
-
+eval "$(zoxide init zsh)"
 # ==========================================
 # 4. 终端按键绑定与光标设置
 # ==========================================

@@ -1,0 +1,9 @@
+{
+  "promptDelete": false,
+  "vimMode": true,
+  "defaultViewMode": "source",
+  "livePreview": true,
+  "spellcheck": false,
+  "alwaysUpdateLinks": true,
+  "attachmentFolderPath": "Attachments"
+}

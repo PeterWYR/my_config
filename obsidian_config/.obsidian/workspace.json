@@ -1,0 +1,259 @@
+{
+  "main": {
+    "id": "55b79162d5013b32",
+    "type": "split",
+    "children": [
+      {
+        "id": "025d1f52c0e0ce17",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ca9395838039a506",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Lecture3.3.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Lecture3.3"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "40fd43142b9266bd",
+    "type": "split",
+    "children": [
+      {
+        "id": "aad9f99ebb1fc520",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d9f6b7bd62ade371",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "e06b9c8dd9c754c4",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "2e3a84b1ca6ca8f2",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 262.5
+  },
+  "right": {
+    "id": "3392b28195288d3f",
+    "type": "split",
+    "children": [
+      {
+        "id": "f8d800c3b3f8207b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6c168e07bfbaf1b4",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Data100/Introduction.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Introduction"
+            }
+          },
+          {
+            "id": "7ed989d12cc0f06a",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Welcome.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Welcome"
+            }
+          },
+          {
+            "id": "3e9b287d733e1203",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "2be54d1a361dfd8d",
+            "type": "leaf",
+            "state": {
+              "type": "claudian-view",
+              "state": {},
+              "icon": "bot",
+              "title": "Claudian"
+            }
+          },
+          {
+            "id": "81722a9ad8c36389",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "63ae667dcde3aefa",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Computer Network/TOPDOWN APPROACH.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "TOPDOWN APPROACH 的大纲"
+            }
+          },
+          {
+            "id": "9dc7dbf152dc7d5b",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "calendar"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "claudian:Open Claudian": false
+    }
+  },
+  "active": "ca9395838039a506",
+  "lastOpenFiles": [
+    "Lecture3.2.md",
+    "Lecture3.1.md",
+    "Lecture5.TestReview.md",
+    "Lecture5.2.md",
+    "Lecture5.6.md",
+    "Lecture5.5.md",
+    "Lecture5.4.md",
+    "Lecture5.3.md",
+    "Lecture5.1.md",
+    "Lecture1.1.md",
+    "未命名 1.md",
+    "Excalidraw/Drawing 2026-05-21 13.50.15.excalidraw.md",
+    "Excalidraw",
+    "Computer Network/TOPDOWN APPROACH.md",
+    "Leetcode/Neetcode.md",
+    "Database/Test Preview.md",
+    "How to Stay Discipline/Discipline.md",
+    "Attachments",
+    "Untitled.base",
+    "English Timed Writing Skills.md",
+    "Machine Learning/ML101.md",
+    "Reflect on mock writing.md",
+    "Leetcode",
+    "Database/CMU15-445(database).md",
+    "Database/CS50 SQL.md",
+    "Data100/Introduction.md",
+    "Machine Learning/Linear Regretion.md",
+    "Machine Learning/Cost Function.md",
+    "Untitled 1.md",
+    "Untitled.md",
+    "Data100",
+    "How to Stay Discipline",
+    "Cpp-learning",
+    "Machine Learning",
+    "Computer Network",
+    "Untitled 1.base",
+    "Pasted image 20250812123159.png",
+    "Pasted image 20251113181012.png",
+    "Pasted image 20251112214324.png",
+    "Pasted image 20250813141937.png",
+    "Pasted image 20250810093041.png",
+    "Pasted image 20250812110232.png",
+    "Pasted image 20250812123305.png",
+    "Pasted image 20250813141916.png",
+    "Pasted image 20250811122630.png",
+    "Pasted image 20250812105903.png",
+    "Untitled.canvas"
+  ]
+}

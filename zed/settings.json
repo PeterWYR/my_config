@@ -41,9 +41,9 @@
     "file_finder": {
         "modal_max_width": "large",
     },
-    "ui_font_family": "FiraCode Nerd Font Mono",
+    "ui_font_family": "IosevkaTerm Nerd Font Mono",
     "ui_font_size": 20,
-    "buffer_font_family": "FiraCode Nerd Font Mono",
+    "buffer_font_family": "IosevkaTerm Nerd Font Mono",
     "buffer_font_size": 20,
     "buffer_line_height": {
         "custom": 2,

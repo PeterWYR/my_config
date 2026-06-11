@@ -4,7 +4,7 @@
 // 1. Constructing a hexagon from current and previous cursor positions
 // 2. Using signed distance fields (SDF) for smooth antialiased rendering
 // 3. Animating the trailing corner with easing for fluid motion
-// 4. Enhancing color saturation for visual impact
+// 4. Blending the trail with transparency
 
 // Process each edge: compute distance and determine if point is inside
 void processEdge(vec2 p, vec2 a, vec2 b, inout float minDist, inout float inside) {
@@ -156,17 +156,10 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     vec2 currentCenter = currentPos + vec2(halfCurrentSize.x, -halfCurrentSize.y);
     float sdfCurrentCursor = sdRectangle(normCoord, currentCenter, halfCurrentSize);
 
-    // Enhance color saturation for more vibrant trail effect
-    float gray = dot(iCurrentCursorColor.rgb, vec3(0.299, 0.587, 0.114));
-    const float saturationBoost = 1.8;
-    vec4 enhancedColor = clamp(
-        mix(vec4(vec3(gray), iCurrentCursorColor.a), iCurrentCursorColor, saturationBoost),
-        0.0, 1.0
-    );
-
-    // Blend trail color with background
+    // Blend a transparent trail color with background
+    const float trailOpacity = 0.35;
     vec4 originalColor = fragColor;
-    fragColor.rgb = mix(fragColor.rgb, enhancedColor.rgb, alpha);
+    fragColor.rgb = mix(fragColor.rgb, iCurrentCursorColor.rgb, alpha * iCurrentCursorColor.a * trailOpacity);
 
     // Remove trail where it overlaps with current cursor
     fragColor.rgb = mix(fragColor.rgb, originalColor.rgb, step(sdfCurrentCursor, 0.0));

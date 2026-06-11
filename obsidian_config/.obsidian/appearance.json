@@ -1,0 +1,11 @@
+{
+  "interfaceFontFamily": "IosevkaTerm Nerd Font",
+  "textFontFamily": "IosevkaTerm Nerd Font",
+  "accentColor": "",
+  "cssTheme": "Cupertino",
+  "enabledCssSnippets": [
+    "block-cursor"
+  ],
+  "baseFontSize": 20,
+  "theme": "obsidian"
+}
