@@ -35,8 +35,8 @@
     },
     "icon_theme": {
         "mode": "dark",
-        "light": "Bearded Icon Theme",
-        "dark": "Bearded Icon Theme",
+        "light": "Material Icon Theme",
+        "dark": "Material Icon Theme",
     },
     "file_finder": {
         "modal_max_width": "large",

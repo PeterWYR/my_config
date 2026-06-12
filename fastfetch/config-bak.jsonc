@@ -1,8 +1,8 @@
 {
     "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
     "logo": {
-        "type": "kitty-direct",    
-        "source": "/Users/wangyiran/.config/fastfetch/macos/macos-8.png",
+        "type": "iterm",    
+        "source": "$(find \"${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/macos/\" -name \"*.png\" | sort -R | head -1)",
         "width": 40,
         "padding" : {
             "top": 2	
