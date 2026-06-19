@@ -29,7 +29,7 @@ return {
       python = function(f) return { 'python3', f } end,
       lua = function(f) return { 'lua', f } end,
       javascript = function(f) return { 'node', f } end,
-      typescript = function(f) return { 'node', f } end,
+      typescript = function(f) return { 'tsx', f } end,
       c = function(f)
         local out = f:gsub('%.c$', '')
         return { 'sh', '-c', 'gcc -o ' .. vim.fn.shellescape(out) .. ' ' .. vim.fn.shellescape(f) .. ' && ' .. vim.fn.shellescape(out) }
@@ -122,7 +122,64 @@ return {
     end
 
     -----------------------------------------------------------
-    -- 3. Main run function
+    -- 3. SQL execution via vim-dadbod
+    -----------------------------------------------------------
+    local function run_sql()
+      vim.cmd('silent! write')
+      local filepath = vim.fn.expand('%:p')
+      if filepath == '' then
+        vim.notify(' No SQL file to run', vim.log.levels.WARN)
+        return
+      end
+
+      -- Check if vim-dadbod is available
+      local has_dadbod = vim.fn.exists(':DB') == 2
+      if not has_dadbod then
+        vim.notify(' vim-dadbod is not loaded. Open :DBUI first or run :DB <url> < file', vim.log.levels.WARN)
+        return
+      end
+
+      -- Try to get the active DBUI connection URL
+      local db_url = nil
+      -- Check if dadbod-ui has an active connection
+      if vim.fn.exists('*db_ui#resolve') == 1 then
+        db_url = vim.fn['db_ui#resolve'](vim.api.nvim_get_current_buf())
+      end
+      -- Fallback: check b:db variable (set by dadbod-ui when a buffer is associated)
+      if (not db_url or db_url == '') and vim.b.db and vim.b.db ~= '' then
+        db_url = vim.b.db
+      end
+      -- Fallback: check the global DBUI_URL environment variable
+      if (not db_url or db_url == '') then
+        db_url = vim.env.DBUI_URL
+      end
+
+      if not db_url or db_url == '' then
+        vim.notify(
+          ' No active database connection.\n'
+            .. '  → Use <leader>db to open DBUI and select a database, or\n'
+            .. '  → Run :DB <url> to set a connection, or\n'
+            .. '  → Set $DBUI_URL environment variable',
+          vim.log.levels.WARN
+        )
+        return
+      end
+
+      -- Read the SQL file content
+      local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+      local sql = table.concat(lines, '\n')
+
+      if vim.fn.trim(sql) == '' then
+        vim.notify(' SQL file is empty', vim.log.levels.WARN)
+        return
+      end
+
+      -- Execute via :DB command
+      vim.cmd('DB ' .. db_url .. ' ' .. sql)
+    end
+
+    -----------------------------------------------------------
+    -- 4. Main run function
     -----------------------------------------------------------
     local function run_code()
       -- Save the file first
@@ -133,6 +190,12 @@ return {
 
       if filepath == '' then
         vim.notify(' No file to run', vim.log.levels.WARN)
+        return
+      end
+
+      -- Special handling for SQL files: use vim-dadbod
+      if filetype == 'sql' or filetype == 'mysql' or filetype == 'plsql' then
+        run_sql()
         return
       end
 
@@ -231,7 +294,7 @@ return {
     end
 
     -----------------------------------------------------------
-    -- 4. Interactive terminal run (supports stdin input)
+    -- 5. Interactive terminal run (supports stdin input)
     -----------------------------------------------------------
     local function run_code_interactive()
       -- Save the file first
@@ -322,13 +385,13 @@ return {
     end
 
     -----------------------------------------------------------
-    -- 5. Keymaps
+    -- 6. Keymaps
     -----------------------------------------------------------
     vim.keymap.set('n', '<leader>r', run_code, { desc = '[R]un Code' })
     vim.keymap.set('n', '<leader>R', run_code_interactive, { desc = '[R]un Code (Interactive)' })
 
     -----------------------------------------------------------
-    -- 6. Register with which-key (if available)
+    -- 7. Register with which-key (if available)
     -----------------------------------------------------------
     local ok, wk = pcall(require, 'which-key')
     if ok then

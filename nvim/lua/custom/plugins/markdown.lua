@@ -57,6 +57,9 @@ return {
       -- Start with rendering enabled when opening Markdown files
       enabled = true,
 
+      -- Keep rendered view even at cursor position (don't reveal raw markdown)
+      anti_conceal = { enabled = false },
+
       -- ── Headings ──
       heading = {
         enabled = true,

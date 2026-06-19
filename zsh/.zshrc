@@ -18,6 +18,13 @@ export PATH="/Users/wangyiran/.antigravity/antigravity/bin:$PATH"
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# npm global packages
+export NPM_GLOBAL_HOME="$HOME/.npm-global"
+case ":$PATH:" in
+  *":$NPM_GLOBAL_HOME/bin:"*) ;;
+  *) export PATH="$NPM_GLOBAL_HOME/bin:$PATH" ;;
+esac
+
 # ==========================================
 # 2. Zim 框架初始化 (负责加载补全核心模块)
 # ==========================================

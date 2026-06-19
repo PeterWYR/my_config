@@ -629,20 +629,103 @@ require('lazy').setup({
       --  See `:help lsp-config` for information about keys and how to configure
       ---@type table<string, vim.lsp.Config>
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        -- ── C / C++ ──────────────────────────────────────────────
+        clangd = {
+          cmd = {
+            'clangd',
+            '--background-index',
+            '--clang-tidy',
+            '--header-insertion=iwyu',
+            '--completion-style=detailed',
+            '--function-arg-placeholders',
+            '--fallback-style=llvm',
+          },
+          init_options = {
+            usePlaceholders = true,
+            completeUnimported = true,
+            clangdFileStatus = true,
+          },
+        },
 
-        stylua = {}, -- Used to format Lua code
+        -- ── Python ───────────────────────────────────────────────
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+                diagnosticMode = 'openFilesOnly',
+              },
+            },
+          },
+        },
 
-        -- Special Lua Config, as recommended by neovim help docs
+        -- ── Go ───────────────────────────────────────────────────
+        gopls = {
+          settings = {
+            gopls = {
+              analyses = {
+                unusedparams = true,
+                shadow = true,
+              },
+              staticcheck = true,
+              gofumpt = true,
+              usePlaceholders = true,
+              completeUnimported = true,
+            },
+          },
+        },
+
+        -- ── Rust ─────────────────────────────────────────────────
+        rust_analyzer = {
+          settings = {
+            ['rust-analyzer'] = {
+              checkOnSave = { command = 'clippy' },
+              cargo = { allFeatures = true },
+              completion = {
+                postfix = { enable = true },
+              },
+              inlayHints = {
+                closingBraceHints = { enable = true },
+                parameterHints = { enable = true },
+                typeHints = { enable = true },
+              },
+            },
+          },
+        },
+
+        -- ── TypeScript / JavaScript ──────────────────────────────
+        ts_ls = {
+          settings = {
+            typescript = {
+              inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+              },
+            },
+            javascript = {
+              inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+              },
+            },
+          },
+        },
+
+        -- ── Kotlin ───────────────────────────────────────────────
+        kotlin_language_server = {},
+
+        -- ── Zig ──────────────────────────────────────────────────
+        zls = {},
+
+        -- ── Scala (metals) ───────────────────────────────────────
+        -- NOTE: metals is NOT installed via Mason. Install it manually:
+        --   coursier install metals  (https://scalameta.org/metals/docs/editors/new-editor)
+        -- Or use brew: brew install metals
+
+        -- ── Lua ──────────────────────────────────────────────────
         lua_ls = {
           on_init = function(client)
             client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
@@ -686,7 +769,8 @@ require('lazy').setup({
       -- You can press `g?` for help in this menu.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        -- You can add other tools here that you want Mason to install
+        'jdtls', -- Java Language Server (configured via ftplugin/java.lua with nvim-jdtls)
+        'stylua', -- Lua formatter (not an LSP, so lives here instead of in servers table)
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -761,12 +845,12 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
         opts = {},
       },
@@ -796,7 +880,7 @@ require('lazy').setup({
         -- <c-k>: Toggle signature help
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
-        preset = 'default',
+        preset = 'super-tab',
 
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -809,13 +893,28 @@ require('lazy').setup({
       },
 
       completion = {
-        -- By default, you may press `<c-space>` to show the documentation.
-        -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        -- Show documentation automatically after a short delay
+        documentation = { auto_show = true, auto_show_delay_ms = 200 },
+
+        -- Ghost text: shows a preview of the selected completion inline (like VSCode/Copilot)
+        ghost_text = { enabled = true },
+
+        -- Menu appearance
+        menu = {
+          draw = {
+            -- Show label + kind icon + source name in completion menu
+            columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon', 'kind', gap = 1 } },
+          },
+        },
+
+        -- Show the completion list automatically as you type
+        list = {
+          selection = { preselect = true, auto_insert = false },
+        },
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets' },
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
       },
 
       snippets = { preset = 'luasnip' },
@@ -827,7 +926,7 @@ require('lazy').setup({
       -- the rust implementation via `'prefer_rust_with_warning'`
       --
       -- See :h blink-cmp-config-fuzzy for more information
-      fuzzy = { implementation = 'lua' },
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
 
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true },
@@ -896,7 +995,7 @@ require('lazy').setup({
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
       -- ensure basic parser are installed
-      local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'sql', 'vim', 'vimdoc' }
       require('nvim-treesitter').install(parsers)
 
       ---@param buf integer

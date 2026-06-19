@@ -12,7 +12,7 @@
         "dock": "right",
     },
     "theme": {
-        "mode": "dark",
+        "mode": "system",
         "light": "Rosé Pine Dawn",
         "dark": "Rosé Pine",
     },
@@ -42,9 +42,9 @@
         "modal_max_width": "large",
     },
     "ui_font_family": "IosevkaTerm Nerd Font Mono",
-    "ui_font_size": 20,
+    "ui_font_size": 22,
     "buffer_font_family": "IosevkaTerm Nerd Font Mono",
-    "buffer_font_size": 20,
+    "buffer_font_size": 22.0,
     "buffer_line_height": {
         "custom": 2,
     },

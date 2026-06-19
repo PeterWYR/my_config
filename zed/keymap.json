@@ -37,6 +37,8 @@
       "space o": "outline::Toggle",
       "space w": "pane::CloseActiveItem",
       "space q a": "pane::CloseAllItems",
+      "space r": "task::Spawn",
+      "space shift-r": "task::Rerun",
     },
   },
   {

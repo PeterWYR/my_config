@@ -1,0 +1,13 @@
+// Zed tasks — `space r` 运行当前文件对应语言的命令
+// 实际分发逻辑在 run-file.sh,加语言改那个脚本即可
+[
+  {
+    "label": "Run current file",
+    "command": "/Users/wangyiran/.config/zed/run-file.sh",
+    "args": ["$ZED_FILE"],
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "show_command": false
+  }
+]

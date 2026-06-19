@@ -83,6 +83,20 @@ keybind = cmd+shift+d=unbind
 # cmd+d 改成切换全屏 (原来 cmd+enter 干的活)
 keybind = cmd+d=toggle_fullscreen
 
+# --- ctrl+1..0: 跳转 tmux window ---
+# 终端无法发出独立的 Ctrl+<数字> 码,所以发送 ESC+<数字> (= Alt+<数字>),
+# 由 tmux 的 M-<数字> 绑定接住。
+keybind = ctrl+one=text:\x1b1
+keybind = ctrl+two=text:\x1b2
+keybind = ctrl+three=text:\x1b3
+keybind = ctrl+four=text:\x1b4
+keybind = ctrl+five=text:\x1b5
+keybind = ctrl+six=text:\x1b6
+keybind = ctrl+seven=text:\x1b7
+keybind = ctrl+eight=text:\x1b8
+keybind = ctrl+nine=text:\x1b9
+keybind = ctrl+zero=text:\x1b0
+
 
 
 
