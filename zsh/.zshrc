@@ -57,6 +57,8 @@ enable-fzf-tab
 # ==========================================
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+eval "$(atuin init zsh --disable-ctrl-r --disable-up-arrow --disable-ai)"
+  bindkey '^G' atuin-search
 # ==========================================
 # 4. 终端按键绑定与光标设置
 # ==========================================
