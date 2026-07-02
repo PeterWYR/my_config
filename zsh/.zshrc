@@ -95,6 +95,7 @@ alias la='eza -la --icons --group-directories-first --git'
 alias lt='eza --tree --level=2 --icons'      # 树状，2 层
 alias ltt='eza --tree --level=3 --icons'
 alias op='opencode'
+alias hm='hermes'
 alias v='nvim'
 alias lg='lazygit'
 alias t='tmux'
@@ -173,3 +174,6 @@ esac
 
 # Added by Antigravity CLI installer
 export PATH="/Users/wangyiran/.local/bin:$PATH"
+
+# OpenClaw Completion
+[ -f "/Users/wangyiran/.openclaw/completions/openclaw.zsh" ] && source "/Users/wangyiran/.openclaw/completions/openclaw.zsh"

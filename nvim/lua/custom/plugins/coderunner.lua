@@ -36,7 +36,7 @@ return {
       end,
       cpp = function(f)
         local out = f:gsub('%.cpp$', '')
-        return { 'sh', '-c', 'g++ -std=c++23 -o ' .. vim.fn.shellescape(out) .. ' ' .. vim.fn.shellescape(f) .. ' && ' .. vim.fn.shellescape(out) }
+        return { 'sh', '-c', 'g++ -std=c++11 -o ' .. vim.fn.shellescape(out) .. ' ' .. vim.fn.shellescape(f) .. ' && ' .. vim.fn.shellescape(out) }
       end,
       go = function(f) return { 'go', 'run', f } end,
       rust = function(f) return { 'sh', '-c', 'rustc ' .. vim.fn.shellescape(f) .. ' -o /tmp/_rust_out && /tmp/_rust_out' } end,
