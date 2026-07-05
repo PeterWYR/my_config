@@ -115,6 +115,11 @@ alias du='dust'
 alias df='duf'
 alias cl='clear'
 alias cat='bat --paging=never'
+
+alias rc='rustc'
+
+alias dev-layout="~/.config/kitty/sessions/dev-layout.sh"
+
 export BAT_THEME="ansi"
 
 export EDITOR=nvim

@@ -1,96 +1,116 @@
 {
-    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-    "logo": {
-        "type": "kitty-direct",    
-        "source": "/Users/wangyiran/.config/fastfetch/macos/macos-8.png",
-        "width": 40,
-        "padding" : {
-            "top": 2	
-        }
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "padding": {
+      "top": 2,
+      "left": 1,
+      "right": 2
+    }
+  },
+  "display": {
+    "separator": "  "
+  },
+  "modules": [
+    // Title
+    {
+      "type": "title",
+      "format": "{#1}╭───────────── {#}{user-name-colored}"
     },
-    "display": {
-        "separator": "  "
+    // System Information
+    {
+      "type": "custom",
+      "format": "{#1}│ {#}System Information"
     },
-    
-    "modules": [
-        {
-            "type": "custom",
-            "format": "┌────────────────────────────────────────────────────────┐"
-        },
-        {
-            "type": "os",
-            "key": "  󰀶 OS",
-            "keyColor": "red"
-        },
-        {
-            "type": "kernel",
-            "key": "   Kernel",
-            "keyColor": "red"
-        },
-        {
-            "type": "packages",
-            "key": "  󰏗 Packages",
-            "keyColor": "green"
-        },
-        {
-            "type": "display",
-            "key": "  󰹑 Display",
-            "keyColor": "green"
-        },
-        {
-            "type": "terminalfont",
-            "key": "   Font",
-            "keyColor": "yellow"
-        },
-        {
-            "type": "terminal",
-            "key": "   Terminal",
-            "format": "{1}",
-            "keyColor": "yellow"
-        },
-        "break",
-       // {
-       //     "type": "colors",
-       //     "paddingLeft": 2,
-       //     "symbol": "circle"
-       // },
-        "break",
-        {
-            "type": "cpu",
-            "format": "{1}",
-            "key": "   CPU",
-            "keyColor": "blue"
-        },
-        {
-            "type": "gpu",
-            "format": "{1} {2} {12} Ghz",
-            "key": "  󰋵 GPU",
-            "keyColor": "blue"
-        },
-        {
-            "type": "memory",
-            "key": "  󰀚 Memory",
-            "keyColor": "blue"
-        },    
-        {
-            "type": "shell",
-            "format": "{1} v{4}",
-            "key": "  󰘳 Shell",
-            "keyColor": "magenta"
-        },
-        {
-            "type": "disk",
-            "key": "  󰀚 Disk",
-            "keyColor": "magenta"
-        },  
-        {
-            "type": "uptime",
-            "key": "  󱫐 Uptime ",
-            "keyColor": "red"
-        },
-        {
-            "type": "custom",
-            "format": "└────────────────────────────────────────────────────────┘"
-        }
-    ]
+    {
+      "type": "os",
+      "key": "{#separator}│  {#keys}󰍹 OS"
+    },
+    {
+      "type": "kernel",
+      "key": "{#separator}│  {#keys}󰒋 Kernel"
+    },
+    {
+      "type": "uptime",
+      "key": "{#separator}│  {#keys}󰅐 Uptime"
+    },
+    {
+      "type": "packages",
+      "key": "{#separator}│  {#keys}󰏖 Packages",
+      "format": "{all}"
+    },
+    {
+      "type": "custom",
+      "format": "{#1}│"
+    },
+    // Desktop Environment
+    {
+      "type": "custom",
+      "format": "{#1}│ {#}Desktop Environment"
+    },
+    {
+      "type": "de",
+      "key": "{#separator}│  {#keys}󰧨 DE"
+    },
+    {
+      "type": "wm",
+      "key": "{#separator}│  {#keys}󱂬 WM"
+    },
+    {
+      "type": "wmtheme",
+      "key": "{#separator}│  {#keys}󰉼 Theme"
+    },
+    {
+      "type": "display",
+      "key": "{#separator}│  {#keys}󰹑 Resolution"
+    },
+    {
+      "type": "shell",
+      "key": "{#separator}│  {#keys}󰞷 Shell"
+    },
+    {
+      "type": "terminalfont",
+      "key": "{#separator}│  {#keys}󰛖 Font"
+    },
+    {
+      "type": "custom",
+      "format": "{#1}│"
+    },
+    // Hardware Information
+    {
+      "type": "custom",
+      "format": "{#1}│ {#}Hardware Information"
+    },
+    {
+      "type": "cpu",
+      "key": "{#separator}│  {#keys}󰻠 CPU"
+    },
+    {
+      "type": "gpu",
+      "key": "{#separator}│  {#keys}󰢮 GPU"
+    },
+    {
+      "type": "memory",
+      "key": "{#separator}│  {#keys}󰍛 Memory"
+    },
+    {
+      "type": "disk",
+      "key": "{#separator}│  {#keys}󰋊 Disk (/)",
+      "folders": "/"
+    },
+    {
+      "type": "custom",
+      "format": "{#1}│"
+    },
+    // Colors
+    {
+      "type": "colors",
+      "key": "{#separator}│",
+      "symbol": "circle"
+    },
+    // Footer
+    {
+      "type": "custom",
+      "format": "{#1}╰───────────────────────────────╯"
+    }
+  ]
 }
