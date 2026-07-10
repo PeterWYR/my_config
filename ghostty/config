@@ -54,7 +54,7 @@ window-padding-x = 12,4
 window-padding-y = 12,4
 theme = Rose Pine
 font-family = "IosevkaTerm Nerd Font Mono"
-font-size = 22
+font-size = 21
 font-thicken = false
 font-style-italic = false
 font-style-bold-italic = false
@@ -62,6 +62,7 @@ quit-after-last-window-closed = true
 background-opacity = 1.0
 background-blur = false
 term = xterm-256color
+macos-titlebar-style = hidden
 
 # 分屏分隔线颜色 (Rosé Pine)
 split-divider-color = #c4a7e7

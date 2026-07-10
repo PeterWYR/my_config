@@ -7,7 +7,7 @@
 ========         .----------------------.   | === |          ========
 ========         |.-""""""""""""""""""-.|   |-----|          ========
 ========         ||                    ||   | === |          ========
-========         ||   KICKSTART.NVIM   ||   |-----|          ========
+========         ||    Peter.NVIM      ||   |-----|          ========
 ========         ||                    ||   | === |          ========
 ========         ||                    ||   |-----|          ========
 ========         ||:Tutor              ||   |:::::|          ========
@@ -122,6 +122,12 @@ vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 -- Enable break indent
 vim.o.breakindent = true
 
+-- Use 4 spaces for indentation by default
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+vim.o.expandtab = true
+
 -- Enable undo/redo changes even after closing and reopening a file
 vim.o.undofile = true
 
@@ -159,6 +165,9 @@ vim.o.inccommand = 'split'
 -- Show which line your cursor is on
 vim.o.cursorline = true
 
+-- Force block cursor in all modes (no thin beam in insert mode)
+vim.o.guicursor = 'n-v-c-sm-i-ci-ve-r-cr-o:block'
+
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 10
 
@@ -180,24 +189,27 @@ vim.keymap.set('n', 'n', '^', { desc = 'Go to first non-blank character' })
 vim.keymap.set('n', 'm', '$', { desc = 'Go to end of line' })
 vim.keymap.set('n', 't', '%', { desc = 'Go to matching pair' })
 
--- T-shaped ijkl movement (i=up, j=left, k=down, l=right)
---vim.keymap.set({ 'n', 'v' }, 'i', '<Up>', { desc = 'Move up' })
---vim.keymap.set({ 'n', 'v' }, 'j', '<Left>', { desc = 'Move left' })
---vim.keymap.set({ 'n', 'v' }, 'k', '<Down>', { desc = 'Move down' })
---vim.keymap.set({ 'n', 'v' }, 'l', '<Right>', { desc = 'Move right' })"
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'html',
+  callback = function(args)
+    vim.keymap.set('n', '<leader>o', function()
+      local filepath = vim.fn.expand('%:p')
+      if filepath == '' then
+        vim.notify('No HTML file to open', vim.log.levels.WARN)
+        return
+      end
 
--- s to enter insert mode (replaces i)
---vim.keymap.set('n', 's', 'i', { desc = 'Enter insert mode' })
+      vim.cmd('silent! write')
+      vim.fn.jobstart({ 'open', filepath }, { detach = true })
+    end, { buffer = args.buf, desc = 'Open HTML in default browser' })
+  end,
+})
 
--- Capital IJKL for 7-unit jumps
---vim.keymap.set({ 'n', 'v' }, 'I', '7<Up>', { desc = 'Jump up 7 lines' })
---vim.keymap.set({ 'n', 'v' }, 'J', '7<Left>', { desc = 'Jump left 7 characters' })
---vim.keymap.set({ 'n', 'v' }, 'K', '7<Down>', { desc = 'Jump down 7 lines' })
---vim.keymap.set({ 'n', 'v' }, 'L', '7<Right>', { desc = 'Jump right 7 characters' })
+
 
 -- jk / kj to escape insert mode
-vim.keymap.set('i', 'jk', '<Esc>', { desc = 'Exit insert mode' })
-vim.keymap.set('i', 'kj', '<Esc>', { desc = 'Exit insert mode' })
+--vim.keymap.set('i', 'jk', '<Esc>', { desc = 'Exit insert mode' })
+--vim.keymap.set('i', 'kj', '<Esc>', { desc = 'Exit insert mode' })
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
@@ -979,6 +991,31 @@ require('lazy').setup({
         },
       }
 
+      require('mini.comment').setup()
+
+      local function toggle_comment_lines(line_start, line_end)
+        if line_start > line_end then
+          line_start, line_end = line_end, line_start
+        end
+
+        MiniComment.toggle_lines(line_start, line_end)
+      end
+
+      local function map_comment_toggle(keys)
+        vim.keymap.set({ 'n', 'i' }, keys, function()
+          local line = vim.fn.line '.'
+          toggle_comment_lines(line, line)
+        end, { desc = 'Toggle comment line' })
+
+        vim.keymap.set('x', keys, function()
+          toggle_comment_lines(vim.fn.line 'v', vim.fn.line '.')
+        end, { desc = 'Toggle comment selection' })
+      end
+
+      map_comment_toggle '<D-/>'
+      map_comment_toggle '<C-/>'
+      map_comment_toggle '<C-_>'
+
       -- Statusline is provided by lualine (powerline style).
       --  See lua/custom/plugins/lualine.lua
 
@@ -1056,7 +1093,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommended keymaps
 

@@ -57,6 +57,7 @@ enable-fzf-tab
 # ==========================================
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+eval "$(tv init zsh)"
 eval "$(atuin init zsh --disable-ctrl-r --disable-up-arrow --disable-ai)"
   bindkey '^G' atuin-search
 # ==========================================
@@ -67,21 +68,15 @@ export KEYTIMEOUT=1
 # Let Ctrl-s reach tmux instead of terminal flow control.
 [[ -t 0 ]] && stty -ixon 2>/dev/null
 
-# ── Vi mode 光标形状 ──
-function _cursor_block() { print -n -- $'\e[2 q' }  # normal：实心块
-function _cursor_beam()  { print -n -- $'\e[6 q' }  # insert：竖线
+# ── Vi mode 光标形状（始终使用实心块） ──
+function _cursor_block() { print -n -- $'\e[2 q' }
 
-function zle-keymap-select() {
-  case $KEYMAP in
-    vicmd)      _cursor_block ;;
-    main|viins) _cursor_beam  ;;
-  esac
-}
+function zle-keymap-select() { _cursor_block }
 zle -N zle-keymap-select
 
 function zle-line-init() {
   zle -K viins
-  _cursor_beam
+  _cursor_block
 }
 zle -N zle-line-init
 
@@ -96,6 +91,7 @@ alias lt='eza --tree --level=2 --icons'      # 树状，2 层
 alias ltt='eza --tree --level=3 --icons'
 alias op='opencode'
 alias hm='hermes'
+alias oc='openclaw'
 alias v='nvim'
 alias lg='lazygit'
 alias t='tmux'
@@ -116,7 +112,6 @@ alias df='duf'
 alias cl='clear'
 alias cat='bat --paging=never'
 
-alias rc='rustc'
 
 alias dev-layout="~/.config/kitty/sessions/dev-layout.sh"
 
@@ -139,7 +134,7 @@ fkill() {
 # ---- Conda lazy load ----
 conda() {
   unset -f conda
-  source /Users/wangyiran/miniconda3/etc/profile.d/conda.sh
+# source /Users/wangyiran/miniconda3/etc/profile.d/conda.sh  # commented out by conda initialize
   conda "$@"
 }
 
@@ -168,17 +163,24 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-case ":$PATH:" in
-  *":$BUN_INSTALL/bin:"*) ;;
-  *) export PATH="$BUN_INSTALL/bin:$PATH" ;;
-esac
-# bun end
-
-
 # Added by Antigravity CLI installer
 export PATH="/Users/wangyiran/.local/bin:$PATH"
 
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
 # OpenClaw Completion
 [ -f "/Users/wangyiran/.openclaw/completions/openclaw.zsh" ] && source "/Users/wangyiran/.openclaw/completions/openclaw.zsh"
+
