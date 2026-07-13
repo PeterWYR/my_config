@@ -11,6 +11,7 @@ elif (( ${+commands[brew]} )); then
   eval "$(brew shellenv)"
 fi
 
+export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$HOME/.config/emacs/bin:$PATH"
 export PATH="$HOME/fvm/default/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"

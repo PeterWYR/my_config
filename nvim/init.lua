@@ -520,6 +520,24 @@ require('lazy').setup({
     end,
   },
 
+  { -- Scala language server with Metals-specific commands and build import support
+    'scalameta/nvim-metals',
+    ft = { 'scala', 'sbt', 'java' },
+    opts = function()
+      return require('metals').bare_config()
+    end,
+    config = function(self, metals_config)
+      local group = vim.api.nvim_create_augroup('nvim-metals', { clear = true })
+      vim.api.nvim_create_autocmd('FileType', {
+        group = group,
+        pattern = self.ft,
+        callback = function()
+          require('metals').initialize_or_attach(metals_config)
+        end,
+      })
+    end,
+  },
+
   -- LSP Plugins
   {
     -- Main LSP Configuration
