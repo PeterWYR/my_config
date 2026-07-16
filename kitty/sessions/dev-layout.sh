@@ -14,11 +14,11 @@
 # 切换到 splits 布局
 kitty @ goto-layout splits
 
-# 右上窗格（对当前窗格做垂直分割）
-kitty @ launch --location=vsplit --cwd=current
+# 右上窗格（对当前窗格做垂直分割，右侧占 30%）
+kitty @ launch --location=vsplit --bias=30 --cwd=current
 
-# 右下窗格（对右上窗格做水平分割）
-kitty @ launch --location=hsplit --cwd=current
+# 右下窗格（对右上窗格做水平分割，上下各占 50%）
+kitty @ launch --location=hsplit --bias=50 --cwd=current
 
 # 焦点回到左侧主窗格
 kitty @ focus-window --match num:0
