@@ -69,15 +69,21 @@ export KEYTIMEOUT=1
 # Let Ctrl-s reach tmux instead of terminal flow control.
 [[ -t 0 ]] && stty -ixon 2>/dev/null
 
-# ── Vi mode 光标形状（始终使用实心块） ──
+# ── Vi mode 光标形状：插入模式用竖线，命令模式用实心块 ──
 function _cursor_block() { print -n -- $'\e[2 q' }
+function _cursor_line() { print -n -- $'\e[6 q' }
 
-function zle-keymap-select() { _cursor_block }
+function zle-keymap-select() {
+  case $KEYMAP in
+    vicmd) _cursor_block ;;
+    *)     _cursor_line ;;
+  esac
+}
 zle -N zle-keymap-select
 
 function zle-line-init() {
   zle -K viins
-  _cursor_block
+  _cursor_line
 }
 zle -N zle-line-init
 
@@ -92,7 +98,6 @@ alias lt='eza --tree --level=2 --icons'      # 树状，2 层
 alias ltt='eza --tree --level=3 --icons'
 alias op='opencode'
 alias hm='hermes'
-alias oc='openclaw'
 alias v='nvim'
 alias lg='lazygit'
 alias t='tmux'
@@ -102,6 +107,17 @@ alias e='emacs -nw'
 alias o='orb'
 alias cc='claude'
 alias co='codex'
+
+# dbcli 光标：Vim INSERT 用竖线，NORMAL 用块状（仅作用于 pgcli/mycli）
+function _dbcli_with_modal_cursor() {
+  local dbcli_tool=$1
+  shift
+  PYTHONPATH="$HOME/.config/dbcli/cursor-site${PYTHONPATH:+:$PYTHONPATH}" \
+    command "$dbcli_tool" "$@"
+}
+
+function pgcli() { _dbcli_with_modal_cursor pgcli "$@" }
+function mycli() { _dbcli_with_modal_cursor mycli "$@" }
 alias ge='gemini'
 alias ag='agy'
 alias n='node'
@@ -164,6 +180,9 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# bun
+export PATH="/Users/wangyiran/.bun/bin:$PATH"
+# bun end
 # Added by Antigravity CLI installer
 export PATH="/Users/wangyiran/.local/bin:$PATH"
 
@@ -181,7 +200,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
-# OpenClaw Completion
-[ -f "/Users/wangyiran/.openclaw/completions/openclaw.zsh" ] && source "/Users/wangyiran/.openclaw/completions/openclaw.zsh"
-
