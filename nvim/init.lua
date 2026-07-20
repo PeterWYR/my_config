@@ -110,7 +110,7 @@ do
   vim.o.number = true
   -- You can also add relative line numbers, to help with jumping.
   --  Experiment for yourself to see if you like it!
-  -- vim.o.relativenumber = true
+  vim.o.relativenumber = true
 
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
@@ -183,7 +183,7 @@ do
 
   -- Clear highlights on search when pressing <Esc> in normal mode
   --  See `:help hlsearch`
-  vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+  vim.keymap.set('n', '<leader><CR>', '<cmd>nohlsearch<CR>')
 
   -- Diagnostic Config & Keymaps
   --  See `:help vim.diagnostic.Opts`
@@ -219,15 +219,15 @@ do
   -- or just use <C-\><C-n> to exit terminal mode
   vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-  vim.keymap.set('n','<leader><CR>',':nohlsearch<CR>')
-  vim.keymap.set('n','n','^')
-  vim.keymap.set('n','m','$')
-  vim.keymap.set('n','t','5')
-  vim.keymap.set('v','n','^')
-  vim.keymap.set('v','m','$')
-  vim.keymap.set('v','t','5')
-  vim.keymap.set('n','=','Nzz')
-  vim.keymap.set('n','-','nzz')
+  vim.keymap.set('n', 'n', '^')
+  vim.keymap.set('n', 'm', '$')
+  vim.keymap.set('n', 't', '%')
+  vim.keymap.set('v', 'n', '^')
+  vim.keymap.set('v', 'm', '$')
+  vim.keymap.set('v', 't', '%')
+  vim.keymap.set('n', 'U', '<c-r>')
+  vim.keymap.set('n', '=', 'Nzz')
+  vim.keymap.set('n', '-', 'nzz')
   -- TIP: Disable arrow keys in normal mode
   -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
   -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
@@ -359,9 +359,6 @@ do
   --
   -- See `:help gitsigns` to understand what each configuration key does.
   -- Adds git related signs to the gutter, as well as utilities for managing changes
-  vim.pack.add({
-  "https://github.com/HiPhish/rainbow-delimiters.nvim",
-})
 
   vim.pack.add { gh 'lewis6991/gitsigns.nvim' }
   require('gitsigns').setup {
@@ -403,15 +400,7 @@ do
     },
   }
 
-
-  vim.pack.add({
-	{
-		src = "https://github.com/rose-pine/neovim",
-		name = "rose-pine",
-	},
-})
-require("rose-pine").setup()
-vim.cmd("colorscheme rose-pine")
+  vim.pack.add{ gh 'rose-pine/neovim'}
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
@@ -425,9 +414,45 @@ vim.cmd("colorscheme rose-pine")
   --  A collection of various small independent plugins/modules
   vim.pack.add { gh 'nvim-mini/mini.nvim' }
 
-  -- [lualine.nvim]
-  -- A better statusline modules
-  vim.pack.add { gh 'nvim-lualine/lualine.nvim'}
+  
+
+  -- If a nerd font is available, load the icons module for pretty icons in various plugins.
+  if vim.g.have_nerd_font then
+    require('mini.icons').setup()
+    -- Used for backwards compatibility with plugins that require `nvim-web-devicons` (e.g. telescope.nvim)
+    MiniIcons.mock_nvim_web_devicons()
+  end
+
+  -- Better Around/Inside textobjects
+  --
+  -- Examples:
+  --  - va)  - [V]isually select [A]round [)]paren
+  --  - yiiq - [Y]ank [I]nside [I]+1 [Q]uote
+  --  - ci'  - [C]hange [I]nside [']quote
+  require('mini.ai').setup {
+    -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
+    mappings = {
+      around_next = 'aa',
+      inside_next = 'ii',
+    },
+    n_lines = 500,
+  }
+
+
+
+  -- Add/delete/replace surroundings (brackets, quotes, etc.)
+  --
+  -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
+  -- - sd'   - [S]urround [D]elete [']quotes
+  -- - sr)'  - [S]urround [R]eplace [)] [']
+  require('mini.surround').setup()
+
+  vim.pack.add({
+    'https://github.com/nvim-tree/nvim-web-devicons',
+    'https://github.com/nvim-lualine/lualine.nvim'
+})
+
+
 
   require('lualine').setup {
   options = {
@@ -483,36 +508,6 @@ vim.cmd("colorscheme rose-pine")
   inactive_winbar = {},
   extensions = {}
 }
-
-  -- If a nerd font is available, load the icons module for pretty icons in various plugins.
-  if vim.g.have_nerd_font then
-    require('mini.icons').setup()
-    -- Used for backwards compatibility with plugins that require `nvim-web-devicons` (e.g. telescope.nvim)
-    MiniIcons.mock_nvim_web_devicons()
-  end
-
-  -- Better Around/Inside textobjects
-  --
-  -- Examples:
-  --  - va)  - [V]isually select [A]round [)]paren
-  --  - yiiq - [Y]ank [I]nside [I]+1 [Q]uote
-  --  - ci'  - [C]hange [I]nside [']quote
-  --require('mini.ai').setup {
-  --  -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
-  --  mappings = {
-  --    around_next = 'aa',
-  --    inside_next = 'ii',
-  --  },
-  --  n_lines = 500,
-  --}
-
-  -- Add/delete/replace surroundings (brackets, quotes, etc.)
-  --
-  -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-  -- - sd'   - [S]urround [D]elete [']quotes
-  -- - sr)'  - [S]urround [R]eplace [)] [']
-  --require('mini.surround').setup()
-
   -- Simple and easy statusline.
   --  You could remove this setup call if you don't like it,
   --  and try some other statusline plugin
@@ -528,6 +523,53 @@ vim.cmd("colorscheme rose-pine")
 
   -- ... and there is more!
   --  Check out: https://github.com/nvim-mini/mini.nvim
+  --
+  vim.pack.add({ gh 'nvimdev/dashboard-nvim'})
+  require("dashboard").setup({
+  theme = "doom",
+  config = {
+    header = {
+      "",
+      "███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗",
+      "████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║",
+      "██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║",
+      "██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║",
+      "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║",
+      "╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝",
+      "",
+      "           Neovim",
+      "",
+    },
+
+    center = {
+      {
+        icon = ' ',
+        icon_hl = 'Title',
+        desc = 'Find File           ',
+        desc_hl = 'String',
+        key = 'f',
+        keymap = 'SPC f',
+        key_hl = 'Number',
+        key_format = ' %s', -- remove default surrounding `[]`
+        action = 'Telescope find_files'
+      },
+      {
+        icon = ' ',
+        desc = 'Recent',
+        key = 'r',
+        keymap = 'SPC f',
+        key_format = ' %s', -- remove default surrounding `[]`
+        action = 'Telescope oldfiles'
+      },
+    },
+    footer = function()
+      return {
+        "",
+        "⚡ Neovim " .. vim.version().major .. "." .. vim.version().minor,
+      }
+    end,
+  },
+})
 end
 
 -- ============================================================
@@ -773,16 +815,16 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   ---@type table<string, vim.lsp.Config>
   local servers = {
-    -- clangd = {},
-    -- gopls = {},
-    -- pyright = {},
-    -- rust_analyzer = {},
+     clangd = {},
+     gopls = {},
+     pyright = {},
+     rust_analyzer = {},
     --
     -- Some languages (like typescript) have entire language plugins that can be useful:
     --    https://github.com/pmizio/typescript-tools.nvim
     --
     -- But for many setups, the LSP (`ts_ls`) will work just fine
-    -- ts_ls = {},
+     ts_ls = {},
 
     stylua = {}, -- Used to format Lua code
 
@@ -1049,9 +1091,9 @@ do
   --
   -- require 'kickstart.plugins.debug'
   -- require 'kickstart.plugins.indent_line'
-  -- require 'kickstart.plugins.lint'
-  -- require 'kickstart.plugins.autopairs'
-  -- require 'kickstart.plugins.neo-tree'
+  require 'kickstart.plugins.lint'
+  require 'kickstart.plugins.autopairs'
+  require 'kickstart.plugins.neo-tree'
   -- require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
 
   -- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
