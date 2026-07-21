@@ -219,11 +219,11 @@ do
   -- or just use <C-\><C-n> to exit terminal mode
   vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-  vim.keymap.set('n', 'n', '^')
-  vim.keymap.set('n', 'm', '$')
+  vim.keymap.set('n', 'H', '^')
+  vim.keymap.set('n', 'L', '$')
   vim.keymap.set('n', 't', '%')
-  vim.keymap.set('v', 'n', '^')
-  vim.keymap.set('v', 'm', '$')
+  vim.keymap.set('v', 'H', '^')
+  vim.keymap.set('v', 'L', '$')
   vim.keymap.set('v', 't', '%')
   vim.keymap.set('n', 'U', '<c-r>')
   vim.keymap.set('n', '=', 'Nzz')
@@ -392,19 +392,12 @@ do
   -- change the command under that to load whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  vim.pack.add { gh 'folke/tokyonight.nvim' }
-  ---@diagnostic disable-next-line: missing-fields
-  require('tokyonight').setup {
-    styles = {
-      comments = { italic = false }, -- Disable italics in comments
-    },
-  }
 
-  vim.pack.add{ gh 'rose-pine/neovim'}
+  vim.pack.add{ gh 'neanias/everforest-nvim'}
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'rose-pine'
+  vim.cmd.colorscheme 'everforest'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
@@ -560,6 +553,40 @@ do
         keymap = 'SPC f',
         key_format = ' %s', -- remove default surrounding `[]`
         action = 'Telescope oldfiles'
+      },
+      {
+        icon = ' ',
+        desc = 'New File',
+        key = 'n',
+        keymap = 'SPC n',
+        key_format = ' %s',
+        action = 'enew'
+      },
+      {
+        icon = ' ',
+        desc = 'Live Grep',
+        key = 'g',
+        keymap = 'SPC g',
+        key_format = ' %s',
+        action = 'Telescope live_grep'
+      },
+      {
+        icon = ' ',
+        desc = 'File Tree',
+        key = 'e',
+        keymap = 'SPC e',
+        key_format = ' %s',
+        action = 'Neotree reveal'
+      },
+      {
+        icon = ' ',
+        desc = 'Config',
+        key = 'c',
+        keymap = 'SPC c',
+        key_format = ' %s',
+        action = function()
+          vim.cmd.edit(vim.fn.fnameescape(vim.fn.stdpath 'config' .. '/init.lua'))
+        end
       },
     },
     footer = function()

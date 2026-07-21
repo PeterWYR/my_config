@@ -1,7 +1,7 @@
 a vim:fileencoding=utf-8:foldmethod=marker
 
 # BEGIN_KITTY_THEME
-# Catppuccin-Mocha
+# Everforest Dark Soft
 include current-theme.conf
 # END_KITTY_THEME
 
