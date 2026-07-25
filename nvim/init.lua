@@ -84,6 +84,8 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+
+
 -- ============================================================
 -- SECTION 1: OPTIONS
 -- Core Neovim settings, leaders, options, basic keymaps, basic autocmds
@@ -126,6 +128,12 @@ do
 
   -- Enable break indent
   vim.o.breakindent = true
+
+  -- Use four spaces for indentation
+  vim.o.tabstop = 4
+  vim.o.shiftwidth = 4
+  vim.o.softtabstop = 4
+  vim.o.expandtab = true
 
   -- Enable undo/redo changes even after closing and reopening a file
   vim.o.undofile = true
@@ -228,6 +236,7 @@ do
   vim.keymap.set('n', 'U', '<c-r>')
   vim.keymap.set('n', '=', 'Nzz')
   vim.keymap.set('n', '-', 'nzz')
+  vim.keymap.set({'i','v'}, 'jk','<Esc>')
   -- TIP: Disable arrow keys in normal mode
   -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
   -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
@@ -336,7 +345,7 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 -- ============================================================
 -- SECTION 4: UI / CORE UX PLUGINS
--- guess-indent, gitsigns, which-key, colorscheme, todo-comments, mini modules
+-- gitsigns, which-key, colorscheme, todo-comments, mini modules
 -- ============================================================
 do
   -- [[ Installing and Configuring Plugins ]]
@@ -347,14 +356,6 @@ do
   --
   -- For most plugins its not enough to install them, you also need to call their `.setup()` to start them.
   --
-  -- For example, lets say we want to install `guess-indent.nvim` - a plugin for
-  -- automatically detecting and setting the indentation.
-  --
-  -- We first install it from https://github.com/NMAC427/guess-indent.nvim
-  -- and then call its `setup()` function to start it with default settings.
-  vim.pack.add { gh 'NMAC427/guess-indent.nvim' }
-  require('guess-indent').setup {}
-
   -- Here is a more advanced configuration example that passes options to `gitsigns.nvim`
   --
   -- See `:help gitsigns` to understand what each configuration key does.
@@ -392,13 +393,154 @@ do
   -- change the command under that to load whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  -- vim.pack.add {gh 'eddyekofo94/gruvbox-flat.nvim'}
+    vim.pack.add({
+	{
+		src = "https://github.com/rose-pine/neovim",
+		name = "rose-pine",
+	},
+})
+require("rose-pine").setup()
+vim.cmd("colorscheme rose-pine")
 
-  vim.pack.add{ gh 'neanias/everforest-nvim'}
+    -- Rose pine setup
+    --
+require("rose-pine").setup({
+    variant = "auto", -- auto, main, moon, or dawn
+    dark_variant = "main", -- main, moon, or dawn
+    dim_inactive_windows = false,
+    extend_background_behind_borders = true,
+
+    enable = {
+        terminal = true,
+        legacy_highlights = true, -- Improve compatibility for previous versions of Neovim
+        migrations = true, -- Handle deprecated options automatically
+    },
+
+    styles = {
+        bold = true,
+        italic = true,
+        transparency = false,
+    },
+
+    groups = {
+        border = "muted",
+        link = "iris",
+        panel = "surface",
+
+        error = "love",
+        hint = "iris",
+        info = "foam",
+        note = "pine",
+        todo = "rose",
+        warn = "gold",
+
+        git_add = "foam",
+        git_change = "rose",
+        git_delete = "love",
+        git_dirty = "rose",
+        git_ignore = "muted",
+        git_merge = "iris",
+        git_rename = "pine",
+        git_stage = "iris",
+        git_text = "rose",
+        git_untracked = "subtle",
+
+        h1 = "iris",
+        h2 = "foam",
+        h3 = "rose",
+        h4 = "gold",
+        h5 = "pine",
+        h6 = "foam",
+    },
+
+    palette = {
+        -- Override the builtin palette per variant
+        -- moon = {
+        --     base = '#18191a',
+        --     overlay = '#363738',
+        -- },
+    },
+
+	-- NOTE: Highlight groups are extended (merged) by default. Disable this
+	-- per group via `inherit = false`
+    highlight_groups = {
+        -- Comment = { fg = "foam" },
+        -- StatusLine = { fg = "love", bg = "love", blend = 15 },
+        -- VertSplit = { fg = "muted", bg = "muted" },
+        -- Visual = { fg = "base", bg = "text", inherit = false },
+    },
+
+    before_highlight = function(group, highlight, palette)
+        -- Disable all undercurls
+        -- if highlight.undercurl then
+        --     highlight.undercurl = false
+        -- end
+        --
+        -- Change palette colour
+        -- if highlight.fg == palette.pine then
+        --     highlight.fg = palette.foam
+        -- end
+    end,
+})
+
+vim.cmd("colorscheme rose-pine")
+-- vim.cmd("colorscheme rose-pine-main")
+-- vim.cmd("colorscheme rose-pine-moon")
+-- vim.cmd("colorscheme rose-pine-dawn")
+
+  -- vim.pack.add { gh 'neanias/everforest-nvim' }
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'everforest'
+  -- vim.g.gruvbox_flat_style = "hard"
 
+  vim.g.loaded_netrw = 1
+  vim.g.loaded_netrwPlugin = 1
+
+vim.pack.add({
+  {
+    src = "https://github.com/nvim-lua/plenary.nvim",
+  },
+  {
+    src = "https://github.com/mikavilpas/yazi.nvim",
+  },
+})
+
+require("yazi").setup({
+  open_for_directories = false,
+
+  floating_window_scaling_factor = 0.9,
+  yazi_floating_window_border = "rounded",
+  yazi_floating_window_winblend = 0,
+
+  clipboard_register = "+",
+
+  keymaps = {
+    show_help = "<F1>",
+  },
+})
+
+vim.keymap.set(
+  { "n", "v" },
+  "<leader>-",
+  "<cmd>Yazi<CR>",
+  { desc = "Open Yazi at current file" }
+)
+
+vim.keymap.set(
+  "n",
+  "<leader>cw",
+  "<cmd>Yazi cwd<CR>",
+  { desc = "Open Yazi in working directory" }
+)
+
+vim.keymap.set(
+  "n",
+  "<C-Up>",
+  "<cmd>Yazi toggle<CR>",
+  { desc = "Resume last Yazi session" }
+)
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
   require('todo-comments').setup { signs = false }
@@ -406,8 +548,6 @@ do
   -- [[ mini.nvim ]]
   --  A collection of various small independent plugins/modules
   vim.pack.add { gh 'nvim-mini/mini.nvim' }
-
-  
 
   -- If a nerd font is available, load the icons module for pretty icons in various plugins.
   if vim.g.have_nerd_font then
@@ -431,8 +571,6 @@ do
     n_lines = 500,
   }
 
-
-
   -- Add/delete/replace surroundings (brackets, quotes, etc.)
   --
   -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
@@ -440,67 +578,65 @@ do
   -- - sr)'  - [S]urround [R]eplace [)] [']
   require('mini.surround').setup()
 
-  vim.pack.add({
+  vim.pack.add {
     'https://github.com/nvim-tree/nvim-web-devicons',
-    'https://github.com/nvim-lualine/lualine.nvim'
-})
-
-
+    'https://github.com/nvim-lualine/lualine.nvim',
+  }
 
   require('lualine').setup {
-  options = {
-    icons_enabled = true,
-    theme = 'auto',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {
-      statusline = {},
-      winbar = {},
-    },
-    ignore_focus = {},
-    always_divide_middle = true,
-    always_show_tabline = true,
-    globalstatus = false,
-    refresh = {
-      statusline = 1000,
-      tabline = 1000,
-      winbar = 1000,
-      refresh_time = 16, -- ~60fps
-      events = {
-        'WinEnter',
-        'BufEnter',
-        'BufWritePost',
-        'SessionLoadPost',
-        'FileChangedShellPost',
-        'VimResized',
-        'Filetype',
-        'CursorMoved',
-        'CursorMovedI',
-        'ModeChanged',
+    options = {
+      icons_enabled = true,
+      theme = 'auto',
+      component_separators = { left = '', right = '' },
+      section_separators = { left = '', right = '' },
+      disabled_filetypes = {
+        statusline = {},
+        winbar = {},
       },
-    }
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  winbar = {},
-  inactive_winbar = {},
-  extensions = {}
-}
+      ignore_focus = {},
+      always_divide_middle = true,
+      always_show_tabline = true,
+      globalstatus = false,
+      refresh = {
+        statusline = 1000,
+        tabline = 1000,
+        winbar = 1000,
+        refresh_time = 16, -- ~60fps
+        events = {
+          'WinEnter',
+          'BufEnter',
+          'BufWritePost',
+          'SessionLoadPost',
+          'FileChangedShellPost',
+          'VimResized',
+          'Filetype',
+          'CursorMoved',
+          'CursorMovedI',
+          'ModeChanged',
+        },
+      },
+    },
+    sections = {
+      lualine_a = { 'mode' },
+      lualine_b = { 'branch', 'diff', 'diagnostics' },
+      lualine_c = { 'filename' },
+      lualine_x = { 'encoding', 'fileformat', 'filetype' },
+      lualine_y = { 'progress' },
+      lualine_z = { 'location' },
+    },
+    inactive_sections = {
+      lualine_a = {},
+      lualine_b = {},
+      lualine_c = { 'filename' },
+      lualine_x = { 'location' },
+      lualine_y = {},
+      lualine_z = {},
+    },
+    tabline = {},
+    winbar = {},
+    inactive_winbar = {},
+    extensions = {},
+  }
   -- Simple and easy statusline.
   --  You could remove this setup call if you don't like it,
   --  and try some other statusline plugin
@@ -517,86 +653,84 @@ do
   -- ... and there is more!
   --  Check out: https://github.com/nvim-mini/mini.nvim
   --
-  vim.pack.add({ gh 'nvimdev/dashboard-nvim'})
-  require("dashboard").setup({
-  theme = "doom",
-  config = {
-    header = {
-      "",
-      "███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗",
-      "████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║",
-      "██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║",
-      "██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║",
-      "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║",
-      "╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝",
-      "",
-      "           Neovim",
-      "",
-    },
+  vim.pack.add { gh 'nvimdev/dashboard-nvim' }
+  require('dashboard').setup {
+    theme = 'doom',
+    config = {
+      header = {
+        '',
+        '███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗',
+        '████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║',
+        '██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║',
+        '██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║',
+        '██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
+        '╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
+        '',
+       '            Neovim',
+        '',
+      },
 
-    center = {
-      {
-        icon = ' ',
-        icon_hl = 'Title',
-        desc = 'Find File           ',
-        desc_hl = 'String',
-        key = 'f',
-        keymap = 'SPC f',
-        key_hl = 'Number',
-        key_format = ' %s', -- remove default surrounding `[]`
-        action = 'Telescope find_files'
+      center = {
+        {
+          icon = ' ',
+          icon_hl = 'Title',
+          desc = 'Find File           ',
+          desc_hl = 'String',
+          key = 'f',
+          keymap = 'SPC f',
+          key_hl = 'Number',
+          key_format = ' %s', -- remove default surrounding `[]`
+          action = 'Telescope find_files',
+        },
+        {
+          icon = ' ',
+          desc = 'Recent',
+          key = 'r',
+          keymap = 'SPC f',
+          key_format = ' %s', -- remove default surrounding `[]`
+          action = 'Telescope oldfiles',
+        },
+        {
+          icon = ' ',
+          desc = 'New File',
+          key = 'n',
+          keymap = 'SPC n',
+          key_format = ' %s',
+          action = 'enew',
+        },
+        {
+          icon = ' ',
+          desc = 'Live Grep',
+          key = 'g',
+          keymap = 'SPC g',
+          key_format = ' %s',
+          action = 'Telescope live_grep',
+        },
+        {
+          icon = ' ',
+          desc = 'File Tree',
+          key = 'e',
+          keymap = 'SPC e',
+          key_format = ' %s',
+          action = 'Neotree reveal',
+        },
+        {
+          icon = ' ',
+          desc = 'Config',
+          key = 'c',
+          keymap = 'SPC c',
+          key_format = ' %s',
+          action = function() vim.cmd.edit(vim.fn.fnameescape(vim.fn.stdpath 'config' .. '/init.lua')) end,
+        },
       },
-      {
-        icon = ' ',
-        desc = 'Recent',
-        key = 'r',
-        keymap = 'SPC f',
-        key_format = ' %s', -- remove default surrounding `[]`
-        action = 'Telescope oldfiles'
-      },
-      {
-        icon = ' ',
-        desc = 'New File',
-        key = 'n',
-        keymap = 'SPC n',
-        key_format = ' %s',
-        action = 'enew'
-      },
-      {
-        icon = ' ',
-        desc = 'Live Grep',
-        key = 'g',
-        keymap = 'SPC g',
-        key_format = ' %s',
-        action = 'Telescope live_grep'
-      },
-      {
-        icon = ' ',
-        desc = 'File Tree',
-        key = 'e',
-        keymap = 'SPC e',
-        key_format = ' %s',
-        action = 'Neotree reveal'
-      },
-      {
-        icon = ' ',
-        desc = 'Config',
-        key = 'c',
-        keymap = 'SPC c',
-        key_format = ' %s',
-        action = function()
-          vim.cmd.edit(vim.fn.fnameescape(vim.fn.stdpath 'config' .. '/init.lua'))
-        end
-      },
+      footer = function()
+        return {
+          '',
+          '⚡ Neovim ' .. vim.version().major .. '.' .. vim.version().minor,
+        }
+      end,
     },
-    footer = function()
-      return {
-        "",
-        "⚡ Neovim " .. vim.version().major .. "." .. vim.version().minor,
-      }
-    end,
-  },
-})
+  }
 end
 
 -- ============================================================
@@ -842,16 +976,16 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   ---@type table<string, vim.lsp.Config>
   local servers = {
-     clangd = {},
-     gopls = {},
-     pyright = {},
-     rust_analyzer = {},
+    clangd = {},
+    gopls = {},
+    pyright = {},
+    rust_analyzer = {},
     --
     -- Some languages (like typescript) have entire language plugins that can be useful:
     --    https://github.com/pmizio/typescript-tools.nvim
     --
     -- But for many setups, the LSP (`ts_ls`) will work just fine
-     ts_ls = {},
+    ts_ls = {},
 
     stylua = {}, -- Used to format Lua code
 
@@ -1002,7 +1136,7 @@ do
       -- <c-k>: Toggle signature help
       --
       -- See `:help blink-cmp-config-keymap` for defining your own keymap
-      preset = 'default',
+      preset = 'super-tab',
 
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -1015,13 +1149,25 @@ do
     },
 
     completion = {
-      -- By default, you may press `<c-space>` to show the documentation.
-      -- Optionally, set `auto_show = true` to show the documentation after a delay.
-      documentation = { auto_show = false, auto_show_delay_ms = 500 },
+      menu = {
+        border = 'rounded',
+        draw = {
+          columns = {
+            { 'kind_icon' },
+            { 'label', 'label_description', gap = 1 },
+            { 'source_name' },
+          },
+        },
+      },
+      documentation = {
+        auto_show = false,
+        auto_show_delay_ms = 500,
+        window = { border = 'rounded' },
+      },
     },
 
     sources = {
-      default = { 'lsp', 'path', 'snippets' },
+      default = { 'lsp', 'path', 'snippets', 'buffer' },
     },
 
     snippets = { preset = 'luasnip' },
@@ -1038,6 +1184,36 @@ do
     -- Shows a signature help window while you type arguments for a function
     signature = { enabled = true },
   }
+end
+
+-- ============================================================
+-- SECTION 8.5: SCALA / METALS
+-- nvim-metals setup for sbt and Scala CLI projects
+-- ============================================================
+do
+  vim.pack.add {
+    gh 'nvim-lua/plenary.nvim',
+    gh 'scalameta/nvim-metals',
+  }
+
+  local metals_config = require('metals').bare_config()
+  metals_config.capabilities = require('blink.cmp').get_lsp_capabilities()
+
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'scala', 'sbt', 'java' },
+    group = vim.api.nvim_create_augroup('nvim-metals', { clear = true }),
+    callback = function(event)
+      local map_opts = function(desc)
+        return { buffer = event.buf, desc = 'Metals: ' .. desc }
+      end
+
+      vim.keymap.set('n', '<leader>mi', '<cmd>MetalsImportBuild<CR>', map_opts 'Import build')
+      vim.keymap.set('n', '<leader>mr', '<cmd>MetalsRestartMetals<CR>', map_opts 'Restart server')
+      vim.keymap.set('n', '<leader>md', '<cmd>MetalsRunDoctor<CR>', map_opts 'Run Doctor')
+
+      require('metals').initialize_or_attach(metals_config)
+    end,
+  })
 end
 
 -- ============================================================
@@ -1126,8 +1302,8 @@ do
   -- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- require 'custom.plugins'
+  require 'custom.plugins'
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=4 sts=4 sw=4 et
