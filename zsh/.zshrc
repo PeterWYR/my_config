@@ -121,7 +121,6 @@ function mycli() { _dbcli_with_modal_cursor mycli "$@" }
 alias ge='gemini'
 alias ag='agy'
 alias n='node'
-alias md='mkdir'
 alias g='rg'
 alias top='btop'
 alias du='dust'

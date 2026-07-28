@@ -59,8 +59,8 @@
     {
         "context": "Editor && vim_mode == normal",
         "bindings": {
-            "n": "vim::FirstNonWhitespace",
-            "m": "vim::EndOfLine",
+            "H": "vim::FirstNonWhitespace",
+            "L": "vim::EndOfLine",
 
             "=": ["vim::MoveToNextMatch", "editor::ScrollCursorCenter"],
             "-": ["vim::MoveToPreviousMatch", "editor::ScrollCursorCenter"],
