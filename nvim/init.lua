@@ -84,8 +84,6 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
-
-
 -- ============================================================
 -- SECTION 1: OPTIONS
 -- Core Neovim settings, leaders, options, basic keymaps, basic autocmds
@@ -236,7 +234,7 @@ do
   vim.keymap.set('n', 'U', '<c-r>')
   vim.keymap.set('n', '=', 'Nzz')
   vim.keymap.set('n', '-', 'nzz')
-  vim.keymap.set({'i','v'}, 'jk','<Esc>')
+  vim.keymap.set({ 'i', 'v' }, 'jk', '<Esc>')
   -- TIP: Disable arrow keys in normal mode
   -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
   -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
@@ -393,81 +391,18 @@ do
   -- change the command under that to load whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  -- vim.pack.add {gh 'eddyekofo94/gruvbox-flat.nvim'}
-  -- vim.pack.add { gh 'neanias/everforest-nvim' }
-  vim.pack.add { { src = "https://github.com/catppuccin/nvim", name = "catppuccin" } }
-    require("catppuccin").setup({
-    flavour = "auto", -- latte, frappe, macchiato, mocha
-    background = { -- :h background
-        light = "latte",
-        dark = "mocha",
-    },
-    transparent_background = false, -- disables setting the background color.
-    float = {
-        transparent = false, -- enable transparent floating windows
-        solid = false, -- use solid styling for floating windows, see |winborder|
-    },
-    term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
-    dim_inactive = {
-        enabled = false, -- dims the background color of inactive window
-        shade = "dark",
-        percentage = 0.15, -- percentage of the shade to apply to the inactive window
-    },
-    no_italic = false, -- Force no italic
-    no_bold = false, -- Force no bold
-    no_underline = false, -- Force no underline
-    styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-        comments = { "italic" }, -- Change the style of comments
-        conditionals = { "italic" },
-        loops = {},
-        functions = {},
-        keywords = {},
-        strings = {},
-        variables = {},
-        numbers = {},
-        booleans = {},
-        properties = {},
-        types = {},
-        operators = {},
-        -- miscs = {}, -- Uncomment to turn off hard-coded styles
-    },
-    lsp_styles = { -- Handles the style of specific lsp hl groups (see `:h lsp-highlight`).
-        virtual_text = {
-            errors = { "italic" },
-            hints = { "italic" },
-            warnings = { "italic" },
-            information = { "italic" },
-            ok = { "italic" },
-        },
-        underlines = {
-            errors = { "underline" },
-            hints = { "underline" },
-            warnings = { "underline" },
-            information = { "underline" },
-            ok = { "underline" },
-        },
-        inlay_hints = {
-            background = true,
-        },
-    },
-    color_overrides = {},
-    custom_highlights = {},
-    auto_integrations = true,
-    integrations = {
-        cmp = true,
-        gitsigns = true,
-        nvimtree = true,
-        notify = false,
-        mini = {
-            enabled = true,
-            indentscope_color = "",
-        },
-        -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
-    },
-})
+  vim.g.gruvbox_italic_functions = true
+  vim.g.gruvbox_sidebars = { 'qf', 'vista_kind', 'terminal', 'packer' }
 
--- setup must be called before loading
-vim.cmd.colorscheme "catppuccin-nvim"
+  -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+  vim.g.gruvbox_colors = { hint = 'orange', error = '#ff0000' }
+
+  -- Change the TabLineSel highlight group (used by barbar.nvim) to the "orange" color
+  vim.g.gruvbox_theme = { TabLineSel = { bg = 'orange' } }
+  vim.pack.add { gh 'eddyekofo94/gruvbox-flat.nvim' }
+  vim.g.gruvbox_flat_style = 'hard'
+  vim.cmd [[colorscheme gruvbox-flat]]
+  -- vim.pack.add { gh 'neanias/everforest-nvim' }
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
@@ -476,49 +411,34 @@ vim.cmd.colorscheme "catppuccin-nvim"
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 
-vim.pack.add({
-  {
-    src = "https://github.com/nvim-lua/plenary.nvim",
-  },
-  {
-    src = "https://github.com/mikavilpas/yazi.nvim",
-  },
-})
+  vim.pack.add {
+    {
+      src = 'https://github.com/nvim-lua/plenary.nvim',
+    },
+    {
+      src = 'https://github.com/mikavilpas/yazi.nvim',
+    },
+  }
 
-require("yazi").setup({
-  open_for_directories = false,
+  require('yazi').setup {
+    open_for_directories = false,
 
-  floating_window_scaling_factor = 0.9,
-  yazi_floating_window_border = "rounded",
-  yazi_floating_window_winblend = 0,
+    floating_window_scaling_factor = 0.9,
+    yazi_floating_window_border = 'rounded',
+    yazi_floating_window_winblend = 0,
 
-  clipboard_register = "+",
+    clipboard_register = '+',
 
-  keymaps = {
-    show_help = "<F1>",
-  },
-})
+    keymaps = {
+      show_help = '<F1>',
+    },
+  }
 
-vim.keymap.set(
-  { "n", "v" },
-  "<leader>-",
-  "<cmd>Yazi<CR>",
-  { desc = "Open Yazi at current file" }
-)
+  vim.keymap.set({ 'n', 'v' }, '<leader>-', '<cmd>Yazi<CR>', { desc = 'Open Yazi at current file' })
 
-vim.keymap.set(
-  "n",
-  "<leader>cw",
-  "<cmd>Yazi cwd<CR>",
-  { desc = "Open Yazi in working directory" }
-)
+  vim.keymap.set('n', '<leader>cw', '<cmd>Yazi cwd<CR>', { desc = 'Open Yazi in working directory' })
 
-vim.keymap.set(
-  "n",
-  "<C-Up>",
-  "<cmd>Yazi toggle<CR>",
-  { desc = "Resume last Yazi session" }
-)
+  vim.keymap.set('n', '<C-Up>', '<cmd>Yazi toggle<CR>', { desc = 'Resume last Yazi session' })
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
   require('todo-comments').setup { signs = false }
@@ -644,7 +564,7 @@ vim.keymap.set(
         '██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
         '╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
         '',
-       '            Neovim',
+        '            Neovim',
         '',
       },
 
@@ -1181,9 +1101,7 @@ do
     pattern = { 'scala', 'sbt', 'java' },
     group = vim.api.nvim_create_augroup('nvim-metals', { clear = true }),
     callback = function(event)
-      local map_opts = function(desc)
-        return { buffer = event.buf, desc = 'Metals: ' .. desc }
-      end
+      local map_opts = function(desc) return { buffer = event.buf, desc = 'Metals: ' .. desc } end
 
       vim.keymap.set('n', '<leader>mi', '<cmd>MetalsImportBuild<CR>', map_opts 'Import build')
       vim.keymap.set('n', '<leader>mr', '<cmd>MetalsRestartMetals<CR>', map_opts 'Restart server')
