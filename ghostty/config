@@ -50,12 +50,12 @@
 
 #=================== PeterWYR's Ghostty config=====================
 # Basic Config
-window-padding-x = 12,4
+window-padding-x = 10,4
 window-padding-y = 12,4
-theme = Rose Pine
+theme = Catppuccin Mocha
 font-family = "IosevkaTerm Nerd Font Mono"
 font-size = 21
-font-thicken = false
+font-thicken = true
 font-style-italic = false
 font-style-bold-italic = false
 quit-after-last-window-closed = true
@@ -105,7 +105,7 @@ keybind = ctrl+zero=text:\x1b0
 custom-shader = "~/.config/ghostty/shaders/cursor_smear.glsl"
 cursor-style = block
 cursor-style-blink = false
-cursor-opacity = 0.5
+cursor-opacity = 1.0
 adjust-cell-height = 20%
 
 
