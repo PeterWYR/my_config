@@ -128,6 +128,7 @@ alias du='dust'
 alias df='duf'
 alias cl='clear'
 alias cat='bat --paging=never'
+alias hr='herdr'
 
 
 alias dev-layout="~/.config/kitty/sessions/dev-layout.sh"

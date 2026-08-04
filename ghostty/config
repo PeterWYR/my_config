@@ -50,11 +50,11 @@
 
 #=================== PeterWYR's Ghostty config=====================
 # Basic Config
-window-padding-x = 10,4
-window-padding-y = 12,4
+window-padding-x = 14,4
+window-padding-y = 14,4
 theme = Catppuccin Mocha
 font-family = "IosevkaTerm Nerd Font Mono"
-font-size = 21
+font-size = 19
 font-thicken = true
 font-style-italic = false
 font-style-bold-italic = false
@@ -62,7 +62,8 @@ quit-after-last-window-closed = true
 background-opacity = 1.0
 background-blur = false
 term = xterm-256color
-macos-titlebar-style = hidden
+window-decoration = none
+macos-titlebar-style = tabs
 
 # 分屏分隔线颜色 (Rosé Pine)
 split-divider-color = #c4a7e7
